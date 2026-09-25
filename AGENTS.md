@@ -50,7 +50,9 @@ C2CをBun本体へ直接importしない。package/lockfile、OAuth、private sta
 5. Luna-high → C2C Review → Finding → Fix → 再Reviewを実際に成立させる。
 6. その後に自動Development LoopとLauncher追加UIを実装する。
 
-C2Cを起動・公開する前に完全監査残件と該当Security gateを満たす。文書上の設計決定やpackage骨格の作成は、未受入Runtimeを起動する許可ではない。
+実WorkspaceでのC2C起動・外部公開へ進む前に、完全監査残件と該当Security gateを満たす。受入のための合成fixture・一時Workspace・隔離state・loopback試験は実運用開始と区別して実施できる。文書上の設計決定やpackage骨格の作成は、未受入Runtimeを実運用する許可ではない。
+
+CLI全体をReviewerへ公開しない。sourceのsetup/doctor等には設定変更があり、doctor --no-fixも無副作用とは限らない。統合Hostでは診断と修復・保存・Pairing等の管理操作を分離する。
 
 ## 日本語化
 
@@ -86,4 +88,4 @@ tool上限前には完了commit、未commit、次WU、未実行検証を正本�
 
 ## 共通Rules参照
 
-`Shota-Zaki/development-rules` / main / 3.1.1 / `c55ffb6b6f21bdb9c78f70f6a47e59c75a3f74b5`。このforkには現時点でRules Snapshot一式を複製せず、必要な同期は独立WUとする。
+既存正本から継承した参照: `Shota-Zaki/development-rules` / main / 3.1.1 / `c55ffb6b6f21bdb9c78f70f6a47e59c75a3f74b5`。本作業ではこのRules Repositoryの最新状態を再検証していない。このforkにはRules Snapshot一式を複製せず、必要な同期は独立WUとする。
