@@ -2,45 +2,52 @@
 
 ## Purpose
 
-`miuuyy/codex-chatgpt-web` の機能・構成・upstream追従性をできるだけ維持しながら、日本語利用を第一候補にしたforkとして運用する。
+`codex-chatgpt-web`を本体として、`Shota-Zaki/codex-with-chatgpt`のC2Cを製品内へ再利用統合する。ChatGPT Web/Astraによる設計、Codex Luna-highによる実装、別Reviewer contextによるC2C read-onlyレビュー、Finding修正・再レビューを1つの製品で扱う。
 
-開発はCodexが実装し、`Shota-Zaki/codex-with-chatgpt` のC2C Bridgeを設計・独立レビュー層として使用する。実装とレビューを分離し、小さいWork Unitで反復する。
+```text
+Astra design / plan
+  → Codex Luna-high implement / test / build
+  → independent Reviewer reads through C2C
+  → Finding → Luna-high fix → re-review
+  → verified Done
+```
+
+C2Cは証拠を読み取る仕組みであり、それ自体がAI Reviewerや実装Runtimeではない。
+
+## 現在地
+
+2026-09-25の統合設計開始時点では、workに設計・Task文書があるだけで、製品コードのC2C統合はまだ開始していない。今回の正本更新も統合実装・live受入を意味しない。開始時の固定HEADと監査結果は[C2C_MIGRATION_AUDIT](../design/C2C_MIGRATION_AUDIT.md)に記録する。
+
+旧方針の「C2Cは外部Repositoryから利用するだけ」は置き換える。sourceを全面rewriteするのではなく、Node package/child processとして局所移植し、出自とlocal patchを追跡する。
 
 ## Target users
 
-- 日本語でCodex / ChatGPT Web連携を利用したい開発者。
-- 主利用者はMac miniを常時稼働の開発ホストとして使い、Codexを実装担当、ChatGPTを設計・レビュー担当として運用する。
-- upstreamの更新を継続して取り込みたいfork運用者。
+日本語でChatGPT Web/Codexを利用する開発者。主運用は24時間稼働Mac miniを開発ホストとし、日常操作は既存Launcher等から行う。upstream利用者の既存locale・機能・設定も維持する。
 
-## Project boundary
+## Boundary
 
-### 対象
+対象は、既存i18nによる日本語first、C2C Review Engine、Repo/実行証跡adapter、手動review循環、その後の自動Development LoopとLauncher局所追加、Mac常駐運用、upstream追従とSecurity同等性確認。
 
-- 既存i18n基盤を利用した日本語-first UX。
-- 日本語表示の不足箇所の監査と最小修正。
-- upstreamとの差分を小さく保つ運用。
-- Codex Luna-highによる実装。
-- `codex-with-chatgpt` の既存C2Cループによる独立レビュー。
-- `work` での設計・実装・検証・Evidence管理。
+本体のBrowser-only / Full harness / Zero Risk、既存モデル選択、browser/MCP/Tunnel/runtimeの主要機能を保全する。選択modeがwriteを許可しない場合、開発ループのために勝手に権限を引き上げない。
 
-### 対象外
+他localeの削除、日本語専用別UI、Bunへの全面移植、独自Bridgeの重複rewrite、`CodeX-Chat-Develop`の復元は範囲に含めない。
 
-- ChatGPT Web / Codex / MCP / Tunnelのコア機能の不要な再実装。
-- 日本語化のための他言語削除。
-- UI翻訳と無関係な大規模リファクタリング。
-- `CodeX-Chat-Develop` への依存または復元。
-- 明示指示のない `main` へのPromotion。
-- C2C Bridgeと同等機能をこのRepositoryへ重複実装すること。
+## Ownership
 
-## Success direction
+- 製品・設計・実装正本: `Shota-Zaki/codex-chatgpt-web/work`
+- upstream/公開基準: main。明示指示があるまで変更しない。
+- source: `Shota-Zaki/codex-with-chatgpt`の監査固定SHA。今回sourceへ書き込まない。
+- Astra: 設計・分割・Acceptance・独立レビュー。
+- Luna-high: 有限WUの実装・検証・修正。
+- Host: 実行委任、限定証跡inbox、checkpoint管理。
+- C2C: read-onlyデータ面。OAuth/管理/private stateを実装側から分離。
 
-- 新規ユーザーが最初から日本語でセットアップを進められる。
-- 既存ユーザーの保存済み言語設定は変わらない。
-- upstream更新を取り込む際の競合が限定的である。
-- Luna-high実装後にC2Cがsource/diff/test evidenceを独立確認し、修正またはDoneを判断できる。
+## Completion
+
+upstream主要機能と全localeの維持、日本語first、C2C統合と単体受入、実際のLuna→Review→Fix→Review、test/typecheck/build成功、Secret/Workspace/read-only境界、Mac24時間運用、追従可能な出自管理、sourceとの機能・Security同等性が揃った状態を統合完成とする。
+
+未実施・環境依存・BlockedはPASSやDoneへ読み替えない。完全監査残件、移植、単体受入、手動循環、自動化、Launcher、Mac実機は別Taskとして進捗を分離する。
 
 ## References
 
-- 要件: [REQUIREMENTS](../design/REQUIREMENTS.md)
-- 構成: [BASIC_DESIGN](../design/BASIC_DESIGN.md)
-- 詳細契約: [DETAILED_DESIGN](../design/DETAILED_DESIGN.md)
+[REQUIREMENTS](../design/REQUIREMENTS.md) / [BASIC_DESIGN](../design/BASIC_DESIGN.md) / [DETAILED_DESIGN](../design/DETAILED_DESIGN.md) / [TASKS](TASKS.md) / [NEXT_WORK](NEXT_WORK.md)
