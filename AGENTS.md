@@ -1,100 +1,89 @@
 # AGENTS.md
 
-このRepositoryは `miuuyy/codex-chatgpt-web` のforkであり、元実装への追従性を最優先する。
+このRepositoryは `miuuyy/codex-chatgpt-web` のfork。upstream主要機能・他locale・追従性を維持し、`Shota-Zaki/codex-with-chatgpt` のC2Cを独立Node Runtimeとして製品内へ統合する。
 
-## 目的
+## 正本
 
-- upstreamの機能・構成をできるだけ維持したまま、日本語利用を第一候補にする。
-- 実装はCodex、設計・独立レビューは `Shota-Zaki/codex-with-chatgpt` のC2Cループを使用する。
-- `CodeX-Chat-Develop` には依存しない。
+- 目的: `docs/project/PROJECT_BRIEF.md`
+- 要求・設計・移植監査: `docs/design/`
+- Task状態: `docs/project/TASKS.md` のJSON
+- 次のWU: `docs/project/NEXT_WORK.md` のJSON
+- 再開情報: `docs/project/AI_WORK_STATE.md` のJSON
+- 実行証跡: `docs/evidence/`
+- Luna-high実装Packet: `docs/implementation/`
 
-Project固有仕様は `docs/project/PROJECT_BRIEF.md` と `docs/design/` を参照する。
-現在Taskは `docs/project/TASKS.md`、次の1 Work Unitは `docs/project/NEXT_WORK.md`、再開上の注意は `docs/project/AI_WORK_STATE.md` を正本とする。
+2026-09-25の統合設計時点では、C2C製品コードはまだ未統合。文書・Packetの存在を実装完了と解釈しない。旧方針の「C2Cは外部利用のみ」は統合設計によって置き換える。「同等機能を全面rewriteせず再利用する」という保守方針は維持する。
 
-## Branch
+## Branch / 変更権限
 
-- `main`: upstream追従・公開基準。明示指示なしに変更しない。
-- `work`: 日本語化、検証、開発文書、実装差分の正本。
+`work` が開発正本。通常の小さいcommit/pushはworkへ行い、GitHubからreadbackする。`main` はupstream/公開基準であり、merge、Release、Deploy、Repository削除・Archive、既存Credential変更、課金操作はユーザーの明示指示時に扱う。source Repositoryを変更する作業は今回の範囲に含めない。`CodeX-Chat-Develop` へ依存しない。
 
-upstreamからの更新を取り込む際は、まず元実装との差分を確認し、fork固有差分を最小限に保つ。
+## 役割
 
-## 役割分担
+Astraは調査・設計・移植判断・Acceptance・Task分割・実装委任・独立レビューを担当する。大量の製品コード編集はCodex Luna-highが担当する。
 
-### 設計・レビュー
+Codex Luna-highは設計済みWUの編集、test/typecheck/build、Git操作、Finding修正を担当する。モデル表示名を未知のCLI/API model IDへ推測変換しない。実際の選択モデル・effortを記録し、無断のモデル切替を成功として報告しない。
 
-`Shota-Zaki/codex-with-chatgpt` のC2C Bridgeを使用する。
+C2CはAIモデルそのものではなく、独立ReviewerへWorkspace/source/diff/execution evidenceを提供するread-only境界。Reviewer contextにはCodexのwrite/shell/管理権限を渡さない。修正はReviewerが実行せず、Findingを受けたHostが次のLuna-high Packetとして委任する。
 
-- 対象Repositoryを `codex-chatgpt-web` に固定する。
-- source、git diff、test記録をC2Cの読み取り専用MCPから独立確認する。
-- 実装担当の自己申告だけでDoneにしない。
-- 問題があれば次の小さいWork Unitを返す。
-
-### 実装
-
-現在の標準実装担当は **Codex Luna-high**。
-
-- `work` 上だけで実装する。
-- 設計正本とAcceptanceを変更せずに実装する。
-- ファイル編集、shell、Git、test、typecheck、buildを担当する。
-- 1 Work Unitを小さく保ち、実装後にC2Cレビューへ渡す。
-- モデル固有の挙動を製品仕様へ埋め込まない。
-
-## 実装ループ
+## 製品構成
 
 ```text
 codex-chatgpt-web
-  設計・調査
-      ↓
-Codex Luna-high
-  workへ実装・検証
-      ↓
-codex-with-chatgpt
-  C2Cでdiff/test/sourceを独立レビュー
-      ↓
-修正PLANまたはDONE
-      ↓
-必要ならLuna-highへ戻す
+  upstream Web / Codex Runtime       write可能な実装担当
+  packages/c2c-review                Node / pnpm / read-only MCP
+  integrations/c2c                   小さいHost adapter
+  integrations/development-loop      手動循環受入後のorchestrator
+  launcher                          既存UIへの局所追加
 ```
 
-レビュー時は `codex-with-chatgpt` の既存SkillとINIT / EXECUTED / REVIEWループを再利用し、このRepository側へ重複したBridge実装を追加しない。
+上記の新規ディレクトリは実装予定であり、現在存在するという意味ではない。
 
-## 日本語化方針
+C2CをBun本体へ直接importしない。package/lockfile、OAuth、private state、公開MCPと管理APIの境界を分離する。CodexにC2C状態領域全体を書込許可せず、実行証跡inboxだけを限定共有する。readOnlyHintや別processだけをOS sandboxの証明としない。
 
-1. 既存の `launcher/src/i18n.ts`、`launcher/src/limits-copy.ts`、`launcher/electron/languages.json` を再利用する。
-2. 日本語のために英語文字列をソース全体へ直接埋め込まない。
-3. Protocol、connector名、selector、endpoint、エラー判定用の機械契約文字列は、UI表示と明確に分離されていない限り翻訳しない。
-4. 他言語を削除しない。
-5. 初回表示を日本語にする場合も、言語選択画面と既存の保存済み言語設定を維持する。
-6. 日本語化と機能変更を同じWork Unitへ混ぜない。
+## 工程
 
-## 最初の実装方針
+1. 固定sourceの監査・A/B/C/D/E分類。未精査範囲も記録する。
+2. 要求・基本/詳細設計と移植ゲートを確定する。
+3. 通信しないpackage骨格から、小さいWUで移植と補強を行う。
+4. C2C単体の機能・Secret・Workspace・read-only受入を行う。
+5. Luna-high → C2C Review → Finding → Fix → 再Reviewを実際に成立させる。
+6. その後に自動Development LoopとLauncher追加UIを実装する。
 
-新規状態の `language: null` は維持する。
-`launcher/electron/state.cjs` の保存形式は変更しない。
+C2Cを起動・公開する前に完全監査残件と該当Security gateを満たす。文書上の設計決定やpackage骨格の作成は、未受入Runtimeを起動する許可ではない。
 
-初回UIのフォールバックだけを日本語にするため、`launcher/src/App.tsx` の未選択時言語を `"en"` から `"ja"` へ変更する。
-これにより言語選択画面は残り、初期選択だけ日本語になる。
+## 日本語化
 
-## 検証
+既存の `launcher/src/i18n.ts`、`limits-copy.ts`、`launcher/electron/languages.json` を利用し、他localeと保存済み言語を維持する。日本語専用UI treeを作らない。DOM selector、connector名、MCP名、endpoint、CLI option、protocol fieldなど機械契約は翻訳しない。
 
-製品コードを変更したWork Unitでは、最低限対象に応じて以下を実行する。
+`CGW-JP-001` は `launcher/src/App.tsx` のdocumentLanguage/languageの未選択fallbackだけをenからjaへ変更する。`launcher/electron/state.cjs` の `language: null` と言語選択stageは維持する。日本語化とC2C移植を同一WUへ混ぜない。
+
+## 検証・Done
+
+WUは原則5〜10ファイル以内。製品差分とcheckpoint更新が合わせて大きくなる場合は別WUへ分ける。
+
+製品コード変更では対象に応じて以下を実行し、command/cwd/exit code/対象commitと出力を記録する。
 
 ```sh
+bun run typecheck
+bun run test
+bun run build
 bun run --cwd launcher typecheck
 bun run --cwd launcher test
 bun run --cwd launcher build
 bun run verify
 ```
 
-実行できない検証を成功扱いにしない。GitHub APIだけで作業した場合は未実行として残す。
+C2C packageにはsource由来のpnpm test/typecheck/buildとNode runtime testsを別に用意する。実在するscriptを確認して使い、存在しないscriptや未実行試験をPASSにしない。配布・live browser・Mac実機の検証は単体testと区別する。
 
-## 共通Rules
+受入対象はRepo/Task/run/base/headに結び付ける。古い結果、別Repo、欠落output、途中切れdiff、取得エラーは成功の証拠にならない。C2C完成前の工程レビューはGitHub上の独立diff確認と実行証跡で行い、live C2C受入とは別に記録する。最終Doneは必須AcceptanceとRequired Verificationを満たしたときだけ。
 
-参照基準:
+## エラー復旧
 
-- Repository: `Shota-Zaki/development-rules`
-- Version: `3.1.1`
-- Branch: `main`
-- Commit: `c55ffb6b6f21bdb9c78f70f6a47e59c75a3f74b5`
+1回の失敗で全体を止めず、失敗したTask/WUへ影響を限定する。GitHub大規模書込は少数ファイルの取得→変更→commit→readbackへ分割する。SHA競合は最新HEAD/該当blobを読み直して再適用し、force pushしない。
 
-このforkには現時点でRules Snapshot一式を複製しない。fork固有差分を小さくするため、Project正本とこの入口だけを追加し、必要になった時点で独立Work Unitとして同期する。
+tool上限前には完了commit、未commit、次WU、未実行検証を正本へ保存する。404/取得失敗はtree/list/別の小scopeで確認し、同じ失敗を盲目的に繰り返さない。C2C接続失敗はENV/live ReviewをDeferredとし、設計・移植準備・local tests・文書・他Ready Taskを継続する。接続復旧のために別Workspaceを選んだり既存Credentialを変更したりしない。
+
+## 共通Rules参照
+
+`Shota-Zaki/development-rules` / main / 3.1.1 / `c55ffb6b6f21bdb9c78f70f6a47e59c75a3f74b5`。このforkには現時点でRules Snapshot一式を複製せず、必要な同期は独立WUとする。
