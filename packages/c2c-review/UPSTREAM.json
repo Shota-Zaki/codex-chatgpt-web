@@ -1,0 +1,57 @@
+{
+  "schemaVersion": 1,
+  "sourceRepository": "Shota-Zaki/codex-with-chatgpt",
+  "sourceCommit": "89af4fa34952fe58e017b095ae2f793420cf05b0",
+  "sourceVersion": "0.1.3",
+  "files": [
+    {
+      "sourcePath": "package.json",
+      "sourceBlobSha": "097780c636d5bb240ccc94814f8b36a9d008a4d5",
+      "targetPath": "packages/c2c-review/package.json",
+      "migrationClass": "localized",
+      "localPatchReason": "Renamed to @codex-chatgpt-web/c2c-review, made private, and removed bin and scripts for unported CLI, dev, watch, runtime, and macOS service entry points."
+    },
+    {
+      "sourcePath": "pnpm-lock.yaml",
+      "sourceBlobSha": "88336be7db815addbbd67c86bda9713cc57d284d",
+      "targetPath": "packages/c2c-review/pnpm-lock.yaml",
+      "migrationClass": "verbatim",
+      "localPatchReason": null
+    },
+    {
+      "sourcePath": "pnpm-workspace.yaml",
+      "sourceBlobSha": "5ed0b5af0d45919f64c66edfb16a5f4512461fa1",
+      "targetPath": "packages/c2c-review/pnpm-workspace.yaml",
+      "migrationClass": "verbatim",
+      "localPatchReason": null
+    },
+    {
+      "sourcePath": "tsconfig.json",
+      "sourceBlobSha": "48246224166b6f9d8e7a51235a44871dd61d594e",
+      "targetPath": "packages/c2c-review/tsconfig.json",
+      "migrationClass": "verbatim",
+      "localPatchReason": null
+    },
+    {
+      "sourcePath": "vitest.config.ts",
+      "sourceBlobSha": "dc3c799e87542ab109992c115c97702447db388c",
+      "targetPath": "packages/c2c-review/vitest.config.ts",
+      "migrationClass": "verbatim",
+      "localPatchReason": null
+    },
+    {
+      "sourcePath": "LICENSE",
+      "sourceBlobSha": "718f931a2eda70e424562874c367cd5cf3c9d575",
+      "targetPath": "packages/c2c-review/LICENSE",
+      "migrationClass": "verbatim",
+      "localPatchReason": null
+    },
+    {
+      "sourcePath": ".npmrc",
+      "sourceBlobSha": "56d20c620227775940e184dfab1d2117833be0d5",
+      "targetPath": null,
+      "migrationClass": "not_adopted",
+      "localPatchReason": "Source .npmrc only sets store-dir=.tooling/pnpm-store, a cache location. Host cache policy remains independent; no runtime or dependency contract requires this file."
+    }
+  ]
+}
