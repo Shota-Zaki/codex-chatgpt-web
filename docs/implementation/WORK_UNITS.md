@@ -16,11 +16,13 @@ TASKS/NEXT_WORK/AI_WORK_STATEの3文書更新は別checkpoint WUにする。製�
 | WU-CGW-AUD-002A | CGW-AUD-002 | bin/bootstrap/config/logger/CLI等8ファイル。取得範囲とFindingは同名Evidenceへ保存 |
 | WU-CGW-AUD-002B1 | CGW-AUD-002 | 残りTunnel/provision/version等8ファイル。Named失敗・DNS確認・停止完了のゲート |
 | WU-CGW-AUD-002B2 | CGW-AUD-002 | service入口/Skill/pnpm-workspace/.npmrc。固定設定、管理操作、依存build許可を確認 |
-| WU-CGW-AUD-002B3 | CGW-AUD-002 | 本体bridge/CLI/Codex接合点、source PoC、package配布設定をexact pathsで精査 |
-| WU-CGW-AUD-002C1〜 | CGW-AUD-002 | source全test本文とlock/推移的依存を5〜10ファイルずつ確認。coverageと不足を記録 |
+| WU-CGW-AUD-002B3 | CGW-AUD-002 | source PoC、frozen lock/推移的依存、本体Runtime/Launcher/MCP/model接合点を固定SHAで精査 |
+| WU-CGW-AUD-002C1 | CGW-AUD-002 | Workspace/Search/Git/Execution/MCP/OAuthの中核test 8ファイルを精査 |
+| WU-CGW-AUD-002C2 | CGW-AUD-002 | CLI/secure state/endpoint/logger/pairing/port/prefs/record test 8ファイルを精査 |
+| WU-CGW-AUD-002C3 | CGW-AUD-002 | runtime/privacy/service/sandbox/session/tunnel/Windows test 8ファイルを精査 |
 | WU-CGW-INTEGRATION-PLAN-001 | CGW-DES-001 | 要求・構成・契約・Packet・Task graphを小さい文書commitへ分け、readback |
 
-AUD-002A/B1/B2の静的確認記録は `docs/evidence/audit/` にある。残る範囲を確認するまでCGW-AUD-002は未完了。監査対象sourceは読むだけで、source Repositoryへ書き込まない。
+AUD-002A/B1/B2/B3/C1/C2/C3の静的確認記録は `docs/evidence/audit/` に保存済み。固定source commitに対する主要実装・全test本文・PoC・frozen lock/推移的依存・Host接合点の静的監査は完了し、CGW-AUD-002はDone。test/typecheck/build/live connector/配布/Mac24hは別の動的Acceptanceであり、静的監査DoneをそのPASSへ読み替えない。監査対象source Repositoryへは書き込まない。
 
 ## Initial package — 改訂後の分割
 
@@ -45,7 +47,7 @@ pnpm-workspace.yamlのesbuild限定allowBuildsもsourceの移植対象。.npmrc�
 | WU-CGW-C2C-004B | CGW-C2C-004 | output/sanitize/storeとfixture。metadata/read gate、欠落/digest/並行更新/上限 |
 | WU-CGW-C2C-004C | CGW-C2C-004 | integrations/c2c/evidenceのrecorder/brokerとtest。限定inboxのみ共有 |
 
-上記module群から、出自manifest/Evidenceを含め最大10ファイルになるexact pathsを選ぶ。未精査sourceを丸ごとコピーせず、元blobとlocal patchと対応fixtureを記録する。
+上記module群から、出自manifest/Evidenceを含め最大10ファイルになるexact pathsを選ぶ。sourceを丸ごとコピーせず、固定blobとlocal patchと対応fixtureを記録する。
 
 ## Auth / runtime
 
@@ -67,7 +69,7 @@ pnpm-workspace.yamlのesbuild限定allowBuildsもsourceの移植対象。.npmrc�
 | WU-CGW-C2C-007A | CGW-C2C-007 | 全9 tool正常系、Repo/commit/証跡束縛、実test/typecheck/build |
 | WU-CGW-C2C-007B | CGW-C2C-007 | Secret/escape/auth/read-only副作用/古い証跡拒否、全Required Verification |
 | WU-CGW-ENV-001 | CGW-ENV-001 | 正しい統合製品・artifact・Workspaceへのlive接続。旧connector復旧と区別 |
-| WU-CGW-LOOP-001 | CGW-LOOP-001 | 実Luna→独立C2C取得→実Finding→修正commit→再Review。fixture利用時は明示 |
+| WU-CGW-LOOP-001 | CGW-LOOP-001 | 実行時にユーザーが選択したCodex model/effort→独立C2C取得→実Finding→修正commit→再Verification→再Review。fixture利用時は明示 |
 
 live接続失敗はENV/manual受入へ限定し、独立Readyの監査・日本語化・local検証を続ける。自動ループや新Launcher UIで手動ゲートを省略しない。
 
@@ -77,10 +79,10 @@ live接続失敗はENV/manual受入へ限定し、独立Readyの監査・日本�
 | --- | --- | --- |
 | WU-CGW-LOOP-002A | CGW-LOOP-002 | state machine/tests、wire stateとlocal checkpointの区別 |
 | WU-CGW-LOOP-002B | CGW-LOOP-002 | review dispatch/Result検証/次Packet。実装とReviewer contextの分離 |
-| WU-CGW-LOOP-002C | CGW-LOOP-002 | journal/resume/dedupe/cancel/deadline、障害fixture |
-| WU-CGW-LAUNCHER-001A | CGW-LAUNCHER-001 | 既存IPC経由の状態/Evidence/Finding表示とtest |
-| WU-CGW-LAUNCHER-001B | CGW-LAUNCHER-001 | 限定start/stop/resume/確認。token非露出とowner排他 |
-| WU-CGW-LAUNCHER-001C | CGW-LAUNCHER-001 | 既存i18n全localeとrenderer/localization回帰 |
+| WU-CGW-LOOP-002C | CGW-LOOP-002 | journal/resume/dedupe/cancel/timeout/retry/stale review/duplicate implementation・commit拒否の障害fixture |
+| WU-CGW-LAUNCHER-001A | CGW-LAUNCHER-001 | 既存IPC経由のC2C/Implementer/Review状態、Evidence/Finding/Verification/Blocked表示とtest |
+| WU-CGW-LAUNCHER-001B | CGW-LAUNCHER-001 | current runtime model catalogによるmodel/effort選択と限定Start/Stop/Resume。固定model enumを作らずtoken非露出とowner排他を確認 |
+| WU-CGW-LAUNCHER-001C | CGW-LAUNCHER-001 | 既存i18n全localeとrenderer/localization/model selector回帰 |
 | WU-CGW-PKG-001A | CGW-PKG-001 | Node/C2C/runtime/通知のbundleと小さい既存build接合 |
 | WU-CGW-PKG-001B | CGW-PKG-001 | built artifactのclean起動/欠落/境界smoke。Release/Deployなし |
 | WU-CGW-MAC-001A | CGW-MAC-001 | supervisor/worker/設定adapter/fixture。旧serviceと非衝突 |
@@ -99,4 +101,4 @@ CGW-JP-002は表示面ごとにexact pathsを決め、分類→既存i18n→回�
 
 ## Record
 
-取得→変更→検証→work commit/push→GitHub readback→独立工程レビュー→checkpointを記録する。未実行・失敗はそのまま残す。Accepted code anchorと後続Evidence commitを区別し、文書更新を製品の実行成功として扱わない。
+取得→変更→検証→work commit/push→GitHub readback→独立工程レビュー→checkpointを記録する。ImplementerはCodex、model/effortは各Run/Iteration開始時のruntime user choiceであり、Task/WUは固定model IDを持たない。未実行・失敗はそのまま残す。Accepted code anchorと後続Evidence commitを区別し、文書更新を製品の実行成功として扱わない。
