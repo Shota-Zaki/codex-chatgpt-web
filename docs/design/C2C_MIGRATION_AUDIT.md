@@ -1,6 +1,6 @@
 # C2C migration audit
 
-調査日: 2026-09-25。統合先は `Shota-Zaki/codex-chatgpt-web/work`。移植判断の静的監査であり、製品統合・live受入・Security同等性の証明ではない。全機能分類は作成したが、完全監査には残件がある。
+調査開始日: 2026-09-25、静的監査更新日: 2026-09-26。統合先は `Shota-Zaki/codex-chatgpt-web/work`。移植判断の静的監査であり、製品統合・live受入・Security同等性の証明ではない。固定source tree、全test本文、PoC、依存lock、主要Host接合点までの静的分類を完了した。動的なtest/typecheck/build/live/配布/24h受入は別Taskであり、この文書のDoneに含めない。
 
 ## 1. 固定基準
 
@@ -24,17 +24,21 @@ GitHub compareで本体の開始時workはmainより9 ahead / 0 behind。差分�
 - src/tunnelのNamed/Quick、detect、hostname、named-provision、protocol、provider、state、およびsrc/version.ts。
 - runtimeのbootstrap/privacy/service-common/macos-supervisor/service-worker、scripts/macos-service.mjs、skill/SKILL.md。
 - package.json、lockfileの直接依存部分、pnpm-workspace.yaml、.npmrc、tsconfig/vitest/LICENSE、architecture/security/protocol文書。
-- 本体のProject正本・package、tree/差分。本体srcの接合候補は存在確認のみで、詳細本文監査は残る。
+- 本体のProject正本・package、tree/差分に加え、Runtime/Launcher/配布/MCP/model catalogの主要接合候補本文。
 
 追加監査の固定blobと範囲:
 
 - [AUD-002A](../evidence/audit/WU-CGW-AUD-002A.md): 起動入口・CLI・設定・logger等8ファイル。
 - [AUD-002B1](../evidence/audit/WU-CGW-AUD-002B1.md): Tunnel補助・provision・version等8ファイル。
 - [AUD-002B2](../evidence/audit/WU-CGW-AUD-002B2.md): service入口・Skill・pnpm設定4ファイル。
+- [AUD-002B3](../evidence/audit/WU-CGW-AUD-002B3.md): PoC、frozen lock/推移的依存、Host Runtime/Launcher/MCP/model接合点。
+- [AUD-002C1](../evidence/audit/WU-CGW-AUD-002C1.md): Workspace/Search/Git/Execution/MCP/OAuthの中核test 8ファイル。
+- [AUD-002C2](../evidence/audit/WU-CGW-AUD-002C2.md): CLI/secure state/endpoint/logger/pairing/port/prefs/record test 8ファイル。
+- [AUD-002C3](../evidence/audit/WU-CGW-AUD-002C3.md): runtime/privacy/service/sandbox/session/tunnel/Windows test 8ファイル。
 
-**残る静的監査:** 全test本文とfixture対応、lock全体・推移的依存、scripts/poc-client.mjs、本体のadapter接合箇所。全test treeの存在は確認したが、test本文確認や実行成功とは区別する。CGW-AUD-002で継続する。
+**静的監査の残件:** この固定source commitについて、移植判断に必要な主要実装・全test本文・PoC・依存lock・Host接合点の分類は完了した。将来source commitを更新する場合は差分再監査が必要。
 
-**別の動的受入:** Vitest/Node runtime tests/Bun tests/typecheck/build、公開OAuth/実MCP、配布物、Mac24h、実Lunaと独立Review循環。今回は全て未実施。完全監査やSecurity同等性をPASSにしない。
+**別の動的受入:** Vitest/Node runtime tests/Bun tests/typecheck/build、公開OAuth/実MCP、配布物、Mac24h、runtimeでユーザーが選択したCodex implementerと独立Review循環。現時点では全て未実施。静的監査DoneをSecurity同等性や製品AcceptanceのPASSに読み替えない。
 
 ## 3. A/B/C/D/E分類
 
@@ -60,7 +64,7 @@ A=そのまま移植候補、B=adapter経由再利用、C=本体既存機能と�
 | M16 | paths/logger/prefs/endpoint | B | auth/証跡/判定を分離。権限/symlink/Secret/locale、診断と変更を分離 |
 | M17 | session/checkpoint | B | run/Repo/revisionと関連付け。task切替/再送/二重実行拒否 |
 | M18 | Control protocol/Skill | C | 小さい制御メッセージと既存会話adapter。Repo dataを実行指示にしない |
-| M19 | Codex/browser/model | C | 本体Runtimeを再利用。実model/effort確認、未知ID推測やsilent fallbackなし |
+| M19 | Codex/browser/model | C | 本体Runtime/catalogを再利用。ImplementerはCodex、model/effortはruntimeでユーザー選択。選択値をEvidenceへ記録し、未知ID推測やsilent fallbackなし |
 | M20 | Launcher | C | 手動循環後に既存i18n/IPCへ局所追加。全locale/token非露出/owner一意 |
 | M21 | 重複UI/日本語専用UI tree | D | 追加しない。他localeと本体機能を保持 |
 | M22 | 状態領域全体のsandbox許可 | D | 原実装を採用せず限定inboxのみ共有。auth/runtime/判定へ書込不可 |
@@ -127,7 +131,7 @@ CGW-ENV-001だけをDeferredとし、別Workspaceや認証変更で迂回せず�
 
 ## 5. 検証と保証範囲
 
-既存test treeにはworkspace/privacy/search/git/MCP/OAuth/Pairing/execution/runtime/Tunnel/session等がある。全文と不足fixtureの対応は次の監査で確認する。追加fixtureはF01〜F09に結び付け、合成Secret canaryと一時Workspaceを使う。実credentialや個人ファイルを使わない。
+固定source commitのtest本文はC1/C2/C3で静的確認した。既存testはworkspace/privacy/search/git/MCP/OAuth/Pairing/execution/runtime/Tunnel/session等の防御を広く持つ一方、F01〜F09を統合製品として閉じるにはRepository選択、commit snapshot、Evidence v2、metadata共通Policy、厳密OAuth、失敗意味論、Host ownership等の追加fixtureが必要。追加fixtureは各Findingに結び付け、合成Secret canaryと一時Workspaceを使う。実credentialや個人ファイルを使わない。
 
 readOnlyHintはmetadataでありOS sandboxではない。child processも同一OS userの権限を自動的には減らさない。保証対象はReviewer経路からWorkspace write/任意shell/管理操作を公開しないこと。敵対的な同一OS userまで隔離できるとは未検証で主張しない。
 
@@ -135,4 +139,4 @@ readOnlyHintはmetadataでありOS sandboxではない。child processも同一O
 
 独立Node package/child processと小さいBun Host adapterを採用する。C2CはAIモデルではなく、別Reviewer contextが証拠を取得するread-onlyデータ面。
 
-初回Luna Packetは設定8ファイル→inert entry/test等4ファイル→checkpoint3ファイルに分割し、pnpm esbuild許可を保持する。Packetの送信・実装はまだ行っていない。NEXT_WORKで完全監査残件を優先し、単体受入→手動Review/Fix/再Review→自動化/Launcherの順序を維持する。
+初回Implementation PacketはCodex実装担当向けに、設定8ファイル→inert entry/test等4ファイル→checkpoint文書の順へ分割する。特定modelへ固定せず、Taskには推奨capabilityだけを持たせ、実model/effortは実行時にユーザーが選択する。Packetの送信・製品コード実装はまだ行っていない。設計正本/Acceptance/Task graphの確定後、単体受入→手動Review/Fix/再Review→自動化/Launcherの順序を維持する。
