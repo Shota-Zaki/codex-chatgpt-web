@@ -2,13 +2,14 @@
 
 ## Purpose
 
-`codex-chatgpt-web`を本体として、`Shota-Zaki/codex-with-chatgpt`のC2Cを製品内へ再利用統合する。ChatGPT Web/Astraによる設計、Codex Luna-highによる実装、別Reviewer contextによるC2C read-onlyレビュー、Finding修正・再レビューを1つの製品で扱う。
+`codex-chatgpt-web`を本体として、`Shota-Zaki/codex-with-chatgpt`のC2Cを製品内へ再利用統合する。ChatGPT Web/Astraによる設計、ユーザーが実行時に選択するCodex modelによる実装、別Reviewer contextによるC2C read-onlyレビュー、Finding修正・再レビューを1つの製品で扱う。
 
 ```text
 Astra design / plan
-  → Codex Luna-high implement / test / build
+  → selected Codex implementer / effort
+  → implement / test / build
   → independent Reviewer reads through C2C
-  → Finding → Luna-high fix → re-review
+  → Finding → selected Codex implementer fixes → re-review
   → verified Done
 ```
 
@@ -38,13 +39,13 @@ C2Cは証拠を読み取る仕組みであり、それ自体がAI Reviewerや実
 - upstream/公開基準: main。明示指示があるまで変更しない。
 - source: `Shota-Zaki/codex-with-chatgpt`の監査固定SHA。今回sourceへ書き込まない。
 - Astra: 設計・分割・Acceptance・独立レビュー。
-- Luna-high: 有限WUの実装・検証・修正。
+- Codex implementer: 有限WUの実装・検証・修正。model/effortはruntimeでユーザー選択し、Taskの推奨capabilityは助言に留める。
 - Host: 実行委任、限定証跡inbox、checkpoint管理。
 - C2C: read-onlyデータ面。OAuth/管理/private stateを実装側から分離。
 
 ## Completion
 
-upstream主要機能と全localeの維持、日本語first、C2C統合と単体受入、実際のLuna→Review→Fix→Review、test/typecheck/build成功、Secret/Workspace/read-only境界、Mac24時間運用、追従可能な出自管理、sourceとの機能・Security同等性が揃った状態を統合完成とする。
+upstream主要機能と全localeの維持、日本語first、C2C統合と単体受入、実際の選択Codex implementer→Review→Fix→Review、test/typecheck/build成功、Secret/Workspace/read-only境界、Mac24時間運用、追従可能な出自管理、sourceとの機能・Security同等性が揃った状態を統合完成とする。
 
 未実施・環境依存・BlockedはPASSやDoneへ読み替えない。完全監査残件、移植、単体受入、手動循環、自動化、Launcher、Mac実機は別Taskとして進捗を分離する。
 
