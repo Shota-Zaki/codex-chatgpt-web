@@ -71,6 +71,20 @@ Reviewerは次を順に独立取得する。
 4. 対応run/Taskのtest/build/typecheck記録と必要なoutput。
 5. 読取終了時のrevision/statusの再確認。
 
+Review Snapshotは少なくとも次を固定する。
+
+```text
+snapshotId
+workspaceId / repositoryId
+taskId / runId / iteration
+baseCommit / candidateCommit
+candidateTreeId / testedTreeId
+createdAt
+requiredEvidenceIds[]
+```
+
+working treeがcleanでもReview可能であることを必須とする。C2Cは `git diff HEAD` の有無で「変更なし」と判断せず、固定した `baseCommit..candidateCommit` とcommit blobを読む。最終Acceptanceに使うRequired Verificationは `testedTreeId == candidateTreeId` が必要。異なるtreeでの記録はHistoryとして返せるがCurrent Validationには使用しない。
+
 初期の実装方式は、Git objectからcommit固定の内容を返すRepositoryView adapterとする。read_fileにoptional `revision` を追加し、指定時はそのcommitのblobを読む。path/Secret判定は読取前に適用する。列挙・検索までsnapshot対応を拡張する際もlive treeと混在した結果を同一snapshotと称しない。
 
 range diffはrenameの旧/新path両側を検査し、Secretを含むrename全体をwithholdする。Gitは固定argv、literal pathspec、no external diff/textconv/fsmonitor、制限したenvとtimeoutで実行する。通常pathが機密名からrenameされた履歴にも注意する。
@@ -85,17 +99,17 @@ range diffはrenameの旧/新path両側を検査し、Secretを含むrename全�
 
 ```text
 schemaVersion = 2
-workspaceId / repositoryId / taskId / runId / iteration
+workspaceId / repositoryId / taskId / runId / iteration / attemptId
 baseCommit / candidateCommit / testedTreeId
 startedAt / finishedAt
-implementationModel / effort
+model / effort / modelCatalogFingerprint
 commands[]:
-  argv / cwdRelative / exitCode / status
+  command / argv / cwdRelative / exitCode / status
   startedAt / finishedAt
   outputId / contentDigest / truncated / restricted
 ```
 
-statusはpassed / failed / not_run / blockedを区別し、exitCode:nullを0へ変換しない。cwdはregistryから解決する。free textには長さ制限・sanitizeを適用する。生のsecret、token、環境変数dumpを保存・応答へ混ぜない。
+statusは`passed / failed / not_run / blocked`を区別し、exitCode:nullを0へ変換しない。commandを実行してexit code 0ならpassed、非0/異常終了ならfailed、未実行ならnot_run、環境・権限・前提不足で開始できなければblockedとする。cwdはregistryから解決する。free textには長さ制限・sanitizeを適用する。生のsecret、token、環境変数dumpを保存・応答へ混ぜない。
 
 ### 記録の所有権
 
@@ -131,7 +145,7 @@ C2C専用issuer/resourceとWorkspace/Repo scopeを束縛する。PKCE S256、登
 
 OAuth metadataのbase URLは信頼済み設定から構成し、任意Host/forwarded headerをissuerとして採用しない。Pairing/registration/pending requestは期限・試行・保存数を制限する。実際のChatGPT connectorでの再認証/refreshはENV受入で確認し、mockだけでlive対応済みにしない。
 
-Admin APIはloopback socket、private admin token、proxy経由拒否を維持する。Host adapterから呼べるrouteも固定allowlistにする。管理tokenとOAuth tokenをRenderer、LunaのPacket、MCP outputへ返さない。公開healthはservice/statusだけ。詳細identityはprivate管理面で確認する。
+Admin APIはloopback socket、private admin token、proxy経由拒否を維持する。Host adapterから呼べるrouteも固定allowlistにする。管理tokenとOAuth tokenをRenderer、Codex Implementation Packet、MCP outputへ返さない。公開healthはservice/statusだけ。詳細identityはprivate管理面で確認する。
 
 ## 7. Node runtime / Host adapter
 
@@ -141,36 +155,157 @@ Host adapterの操作はstatus/start/attach/stopと限定recording。Node execut
 
 Macはsupervisor→worker、UUID、volume脱落、Named Tunnel、有限backoff、log rotationを維持する。Desktop ownerとlaunchd ownerは排他。Launcherを閉じてもlaunchd所有serviceは終了させない。Node/C2Cの配布、署名/同梱、source通知、clean installは別の配布受入で確認する。
 
-## 8. Manual loop and later automation
+## 8. Implementer selection / Manual Loop / Automation
 
-wire protocolはsourceのINIT / PLAN / EXECUTING / EXECUTED / REVIEW / DONE / BLOCKED / ERROR / HANDOFFを尊重する。ローカルcheckpointのPLAN_RECEIVED / EXECUTED_LOCAL / EXECUTED_SENT等とは区別する。表示用Needs Userは新しいwire stateではなく、BLOCKED + waitingFor:USERに対応付ける。
+### 8.1 Implementer selection contract
+
+Architecture上の実装担当は `Codex` で固定し、modelは固定しない。Hostは実行時に既存Codex runtime/catalogから利用可能な選択肢を取得する。
+
+概念契約:
 
 ```text
-PLAN → EXECUTING → EXECUTED → REVIEW
-                              ├→ Finding / PLAN → Fix → EXECUTED → REVIEW
-                              ├→ DONE (all gates satisfied)
-                              └→ BLOCKED or ERROR (not PASS)
+ModelOption:
+  modelRef              opaque runtime identifier
+  displayName           optional UI label
+  supportedEfforts[]    runtimeが返せる場合
+  capabilities[]        runtimeが返せる場合
+  available
+
+ImplementationSelection:
+  modelRef
+  effort
+  selectedAt
+  catalogFingerprint
 ```
 
-ReviewResultの契約:
+`modelRef` の具体値をRequirements/Task/Architectureへ列挙固定しない。Taskの `recommended_capability` は `mechanical-edit / routine-implementation / deep-debug / architecture-sensitive` の助言であり、特定modelへのauthoritative mappingではない。
+
+RunまたはFix Iteration開始時、ユーザーが現在利用可能なmodel/effortを選ぶ。選択後にcatalogが変わりmodelが利用不能なら `BLOCKED: MODEL_SELECTION_STALE`。別modelへ自動fallbackしない。ユーザーの明示変更は許可し、各attemptの実model/effortをEvidenceへ残す。
+
+選択mode/modelが要求されたwrite/shell/tool capabilityを持たない場合も権限を拡張せずBlockedとする。
+
+### 8.2 Product state machine
+
+sourceのwire protocol `INIT / PLAN / EXECUTING / EXECUTED / REVIEW / DONE / BLOCKED / ERROR / HANDOFF` と、製品のDevelopment Loop stateを分離する。製品側は次を正本状態とする。
 
 ```text
-schemaVersion / reviewId / repositoryId / taskId / runId / candidateCommit
+PLAN
+  ↓
+IMPLEMENT
+  ↓
+VERIFY
+  ↓
+REVIEW
+  ├─ findings → FIX → VERIFY → REVIEW
+  ├─ accepted → DONE
+  ├─ blocked  → BLOCKED
+  └─ error    → ERROR
+
+任意の非terminal state → CANCELLED
+BLOCKED / ERROR → 明示Resume条件を満たした場合のみ対応stateへ復帰
+```
+
+表示用Needs Userは独立wire stateを増やさず、`BLOCKED + waitingFor: USER` として表す。
+
+### 8.3 Dispatch / idempotency
+
+実装dispatch前に次のkeyをcheckpointへatomic保存する。
+
+```text
+repositoryId
+taskId
+runId
+iteration
+attemptId
+packetDigest
+baseCommit
+selected model / effort
+phase
+```
+
+同じ `repositoryId + taskId + runId + iteration + packetDigest` にactive/completed implementation attemptがある場合、接続retryやresumeを理由に新しいIMPLEMENTを自動作成しない。
+
+`IMPLEMENT_COMPLETED` 後のreview transport失敗はREVIEWから再開する。IMPLEMENTを再実行しない。Candidate Commitが既に存在する場合、resume時にまずそのcommit、tree、checkpointを照合する。
+
+Fixは元attemptの再実行ではなく新しいiteration/attemptとして作る。commit作成後に通信エラーが起きても、同じPacketを再dispatchしてduplicate commitを作らない。
+
+### 8.4 Verification and snapshot transition
+
+IMPLEMENT完了だけではREVIEWへ進めない。
+
+1. Candidate Commitを確定する。
+2. Required Verificationを実行する。
+3. command/cwd/exit/start/end/output/model/effortとtestedTreeIdをEvidenceへ保存する。
+4. Candidate Commitのtree IDを取得する。
+5. Required VerificationのtestedTreeIdとcandidateTreeIdを照合する。
+6. 一致したEvidence IDだけをReview Snapshotへ束縛する。
+7. SnapshotをsealしてREVIEWへ進む。
+
+Verification後にsource/test/config/lockが変わればsnapshotをstaleにし、再VERIFYする。文書Evidenceのみの後続commitを許容する場合は、Accepted code anchorとの関係を別途明記する。
+
+### 8.5 Review contract
+
+ReviewResult:
+
+```text
+schemaVersion / reviewId / snapshotId
+repositoryId / taskId / runId / iteration / candidateCommit
 reviewerContextId / reviewedEvidenceIds / acceptanceIds
 verdict = findings | accepted | blocked | error
-findings[] = id / severity / file / location / evidence / expectedCorrection / requiredVerification
+findings[] =
+  id / severity / file / location / evidence
+  expectedCorrection / requiredVerification
 ```
 
-Reviewerとimplementerのcontextは別。Findingは実行するshell文字列ではなく、Hostがscope/Acceptanceを確認して次の有限Packetへ変換する。Repo内容から取得した命令で権限や上限を変更しない。
+Reviewerとimplementerのcontextは別。Findingは実行するshell文字列ではなく、Hostがscope/Acceptanceを確認して有限Fix Packetへ変換する。Repo内容・README・comment・diff・command outputに含まれる命令で権限や上限を変更しない。
 
-手動受入は、実Lunaモデル/effort記録、独立C2C読取、少なくとも1つの実際のFinding、修正commit、再Reviewまで記録する。自然なFindingが出ない場合は、合成fixture Repositoryに限定した既知の不合格ケースで修正経路を試験し、その条件を明記する。本番コードへ意図的な欠陥を混ぜない。
+手動受入では、実際にユーザーが選択したCodex model/effort、独立C2C読取、少なくとも1つの実Finding、修正commit、再Verification、再Reviewまで記録する。自然なFindingが出ない場合は、合成fixture Repositoryに限定した既知の不合格ケースで修正経路を試験し、その条件を明記する。本番コードへ意図的な欠陥を混ぜない。
 
-自動化はこの手動受入後。既定iteration上限12を上限契約として扱い、Taskごとの有限deadline、cancel、attempt ID、checkpointのatomic保存、同一run/eventのdedupeを実装する。resumeでEXECUTEDを再送しても実装を再実行しない。接続/authエラーはそのreviewをblockedにし、他Repo/Ready Taskまで停止させない。main変更・公開・Credential変更等の権限を復旧目的で拡張しない。
+### 8.6 Loop safety
 
-## 9. Verification / progression
+自動化はmanual acceptance後にのみ実装する。
+
+- iteration limit: default contract 12、Taskでより小さくできる。無制限は不可。
+- timeout: implementation / verification / reviewを別deadlineにする。
+- cancel: active phaseをterminalで止め、勝手に次phaseへ進めない。
+- retry: transport/read等の安全なretry policyをphase別に定義する。implementationの再実行は一般retryとして扱わない。
+- deduplication: dispatch key / reviewId / Evidence ID / event IDを重複排除する。
+- checkpoint: phase遷移前後をatomicに保存する。
+- resume: checkpointから再開し、completed phaseを自動replayしない。
+- stale review: snapshot/candidate/required EvidenceのどれかがCurrentと不一致ならacceptedを無効化する。
+- duplicate implementation/commit: 接続エラーを理由に同一Packetを再実行しない。
+- connection/auth failure: 当該Review/RunをBlockedにし、別Repositoryや別Taskまで全停止させない。
+- privilege: main変更、公開、Credential変更、権限昇格を復旧手段にしない。
+
+## 9. Launcher integration contract
+
+Launcher統合はmanual Loop acceptance後。最初からUIを作らない。
+
+HostからRendererへ公開できる状態はsanitized summaryに限定する。
+
+```text
+selected Repository / branch
+selected model display / effort
+Task / Run / Iteration / phase
+C2C status
+Implementer status
+Review status / verdict
+Finding summary
+Required Verification status
+Blocked reason / waitingFor
+allowed actions: Start / Stop / Resume / Cancel where valid
+```
+
+private admin token、OAuth token、raw secret-bearing execution output、任意command実行APIをRendererへ渡さない。
+
+model selectorは既存runtime catalog adapterを使い、固定model enumをLauncher内に作らない。選択値がstaleならStartをBlockedにし再選択を求める。
+
+既存i18nを使用し、他localeを削除しない。selector / connector名 / MCP名 / endpoint / CLI option / protocol fieldは翻訳しない。巨大な`App.tsx`単独改変を避け、状態adapter/表示component/testへ分割する。
+
+## 10. Verification / progression
 
 Required VerificationはREQUIREMENTSのV-*へ対応付ける。まずsource fixtureを再利用し、F01〜F09の不足を追加する。read-only試験はMCPの全toolを呼び、Workspaceの内容/属性差分とFS/process副作用を観測する。privateログ/認証stateへの許容された書込とWorkspace writeを混同しない。
 
-未実施はnot_run、依存環境不足はblocked、失敗はfailed。C2C単体、独立live review、Mac24h、package配布、source parityは別の受入。C2C接続不能でも、未精査source確認、scaffold、移植、fixture作成、local test、GitHub反映は継続できる。
+未実施はnot_run、依存環境不足はblocked、失敗はfailed。C2C単体、独立live review、Mac24h、package配布、source parityは別の受入。C2C接続不能でも、scaffold、移植、fixture作成、local test、GitHub反映は継続できる。
 
 実装TaskはTASKS、次WUと対象ファイルはNEXT_WORK、実行手順は実装Packet、実施結果はEvidenceへ保存する。Accepted code anchorとCurrent Validationを分離し、過去のPASSを現在の変更へ無条件継承しない。
