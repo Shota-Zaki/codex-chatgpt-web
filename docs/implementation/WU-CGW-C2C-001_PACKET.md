@@ -1,20 +1,20 @@
-# Luna-high implementation Packet: WU-CGW-C2C-001
+# Codex implementation Packet: WU-CGW-C2C-001
 
 ## Goal / 現在地
 
 `Shota-Zaki/codex-chatgpt-web/work` に、C2Cを移植するための**通信しない独立Node package骨格**を作る。C2C本体・live review・開発ループは未統合。このPacketの完了はC2C統合完成ではない。
 
-Task: `CGW-C2C-001`。標準実装担当: Codex Luna-high。Packetは作成済みだが、作成時点でLunaへの送信・実行は行っていない。
+Task: `CGW-C2C-001`。ImplementerはCodex。`recommended_capability: routine-implementation` は助言であり、model/effortはRun開始時に現在のCodex runtime catalogからユーザーが選択する。Packet作成時点では製品コード実装は未実施。
 
-正本は `AGENTS.md`、`docs/project/TASKS.md`、`docs/design/{REQUIREMENTS,BASIC_DESIGN,DETAILED_DESIGN,C2C_MIGRATION_AUDIT}.md`。最新の監査残件はNEXT_WORKを優先する。
+正本は `AGENTS.md`、`docs/project/TASKS.md`、`docs/design/{REQUIREMENTS,BASIC_DESIGN,DETAILED_DESIGN,C2C_MIGRATION_AUDIT}.md`。固定sourceの静的監査 `CGW-AUD-002` と統合設計 `CGW-DES-001` はDoneで、最初の実装TaskとしてこのPacketを開始できる。動的C2C受入・live接続・Development Loop受入は後続Task。
 
 ## 開始確認
 
-監査開始時の本体work: `af6af7f5ba32700ebb030b2288934495710a19de`。main基準: `293341084ac7a1ddd2de12fede3706023f5b6474`。これらを現在HEADと推測せず、実装前にremote work/mainとローカルbranch/statusを再取得する。既存差分・並行作業を上書き/reset/force pushで消さない。
+過去の監査開始HEADを現在HEADと推測しない。実装開始時にremote `work` / `main` とローカルbranch/statusを再取得し、`TASKS.md` で `CGW-AUD-002=Done`、`CGW-DES-001=Done`、`CGW-C2C-001=Ready` を確認する。既存差分・並行作業を上書き/reset/force pushで消さない。
 
-CGW-AUD-002の完全監査は未完了。骨格は未精査serviceをimportしない有限scopeとして準備しているが、Runtime移植・実Workspaceでの起動・外部公開へは該当監査とSecurity gateを満たしてから進む。
+このPacketはGate Bの**通信しない骨格**だけを作る。Bridge/MCP/OAuth/Tunnel/service、実Workspace読取、外部公開は開始しない。静的監査がDoneでも、動的Security Acceptanceやlive受入が済んだことにはしない。
 
-Lunaの実model ID/effortは利用可能なCodex設定で確認して記録する。表示名から未知IDを推測しない。別モデルの実行をLuna実行と報告しない。
+Run開始時に現在利用可能なCodex model/effortを提示し、ユーザーが選択した値を記録する。Task/Packetからmodel IDを推測・固定しない。選択modelが利用不能なら `Blocked / MODEL_SELECTION_STALE` とし、別modelへsilent fallbackしない。
 
 ## 固定sourceと出自
 
@@ -90,13 +90,13 @@ bun run verify
 
 sourceのNode runtime testsは骨格に未移植なので適用外。適用外はPASSに加算しない。実行不能でも固定source取得・設定・test作成・静的確認・GitHub反映は継続できるが、Required Verificationが未完了ならTaskをDoneにしない。
 
-Evidenceに開始/終了commit、tested tree/code anchor、cwd、command、exit code、時刻、Node/pnpm/Bun/model/effort、差分、未実行と理由を記録する。Evidenceを保存した後続HEADを過去のtest対象へ書き換えない。
+EvidenceにRepository/Task/Run/Iteration/attempt、開始/終了commit、Candidate Commit、candidate tree/tested tree、cwd、command、exit code、時刻、Node/pnpm/Bun、実際に選択したmodel/effort、差分、未実行と理由を記録する。Required VerificationをAcceptanceへ使う場合はtested treeが対象Candidateのtreeと一致することを確認する。Evidenceを保存した後続HEADを過去のtest対象へ書き換えない。
 
 ## Independent review / WU-C: checkpoint — 3ファイル
 
 A/Bごとにworkへcommit/pushし、GitHubから実ファイルとcommitをreadbackする。main/source/root Bun/Launcher/既存Credential/Tunnel/OS serviceが無変更であることも確認する。
 
-AstraがGitHub実差分と実行証跡を独立確認する。C2C未完成のため、この工程レビューをlive C2C受入とは呼ばない。FindingはLunaが次の有限WUで修正する。
+AstraがGitHub実差分と実行証跡を独立確認する。C2C未完成のため、この工程レビューをlive C2C受入とは呼ばない。Findingは次の有限Fix Packetへ変換し、そのIteration開始時にユーザーが選択したCodex implementerが修正する。
 
 その後のWU-Cでは次の3文書だけを更新する。
 
@@ -106,7 +106,7 @@ docs/project/NEXT_WORK.md
 docs/project/AI_WORK_STATE.md
 ```
 
-AC-C2C-001〜003 / V-C2C-001と工程レビューを満たした場合だけCGW-C2C-001をDoneへ進める。未実行・失敗は明記し、完全監査残件やlive受入は別Taskのまま残す。
+AC-C2C-001〜003 / V-C2C-001と工程レビューを満たした場合だけCGW-C2C-001をDoneへ進める。未実行・失敗は明記し、C2C機能受入・live接続・manual Development Loopは別Taskのまま残す。
 
 ## Exit / recovery
 
