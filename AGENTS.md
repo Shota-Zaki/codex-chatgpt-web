@@ -10,7 +10,7 @@
 - 次のWU: `docs/project/NEXT_WORK.md` のJSON
 - 再開情報: `docs/project/AI_WORK_STATE.md` のJSON
 - 実行証跡: `docs/evidence/`
-- Luna-high実装Packet: `docs/implementation/`
+- Codex実装Packet: `docs/implementation/`
 
 2026-09-25の統合設計時点では、C2C製品コードはまだ未統合。文書・Packetの存在を実装完了と解釈しない。旧方針の「C2Cは外部利用のみ」は統合設計によって置き換える。「同等機能を全面rewriteせず再利用する」という保守方針は維持する。
 
@@ -20,11 +20,11 @@
 
 ## 役割
 
-Astraは調査・設計・移植判断・Acceptance・Task分割・実装委任・独立レビューを担当する。大量の製品コード編集はCodex Luna-highが担当する。
+Astraは調査・設計・移植判断・Acceptance・Task分割・実装委任・独立レビューを担当する。大量の製品コード編集はCodex implementerが担当する。実装modelは製品仕様へ固定せず、実行時にユーザーが利用可能なCodex modelから選択する。
 
-Codex Luna-highは設計済みWUの編集、test/typecheck/build、Git操作、Finding修正を担当する。モデル表示名を未知のCLI/API model IDへ推測変換しない。実際の選択モデル・effortを記録し、無断のモデル切替を成功として報告しない。
+Codex implementerは設計済みWUの編集、test/typecheck/build、Git操作、Finding修正を担当する。Taskは`recommended_capability`を助言として持てるが、model表示名やmodel IDを仕様へ固定しない。実行時にユーザーが選択したmodel/effortをRun Evidenceへ記録し、利用不能時はBlockedとする。無断のmodel切替・silent fallbackを成功として報告しない。
 
-C2CはAIモデルそのものではなく、独立ReviewerへWorkspace/source/diff/execution evidenceを提供するread-only境界。Reviewer contextにはCodexのwrite/shell/管理権限を渡さない。修正はReviewerが実行せず、Findingを受けたHostが次のLuna-high Packetとして委任する。
+C2CはAIモデルそのものではなく、独立ReviewerへWorkspace/source/diff/execution evidenceを提供するread-only境界。Reviewer contextにはCodexのwrite/shell/管理権限を渡さない。修正はReviewerが実行せず、Findingを受けたHostが次の有限Codex Packetを作成し、そのRunでユーザーが選択したimplementerへ委任する。
 
 ## 製品構成
 
@@ -47,7 +47,7 @@ C2CをBun本体へ直接importしない。package/lockfile、OAuth、private sta
 2. 要求・基本/詳細設計と移植ゲートを確定する。
 3. 通信しないpackage骨格から、小さいWUで移植と補強を行う。
 4. C2C単体の機能・Secret・Workspace・read-only受入を行う。
-5. Luna-high → C2C Review → Finding → Fix → 再Reviewを実際に成立させる。
+5. ユーザー選択Codex implementer → C2C Review → Finding → Fix → 再Reviewを実際に成立させる。
 6. その後に自動Development LoopとLauncher追加UIを実装する。
 
 実WorkspaceでのC2C起動・外部公開へ進む前に、完全監査残件と該当Security gateを満たす。受入のための合成fixture・一時Workspace・隔離state・loopback試験は実運用開始と区別して実施できる。文書上の設計決定やpackage骨格の作成は、未受入Runtimeを実運用する許可ではない。
