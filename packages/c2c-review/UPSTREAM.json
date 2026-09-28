@@ -52,6 +52,20 @@
       "targetPath": null,
       "migrationClass": "not_adopted",
       "localPatchReason": "Source .npmrc only sets store-dir=.tooling/pnpm-store, a cache location. Host cache policy remains independent; no runtime or dependency contract requires this file."
+    },
+    {
+      "sourcePath": null,
+      "sourceBlobSha": null,
+      "targetPath": "packages/c2c-review/src/index.ts",
+      "migrationClass": "local",
+      "localPatchReason": "New WU-CGW-C2C-001B integration file; no corresponding file exists at the fixed upstream source commit."
+    },
+    {
+      "sourcePath": null,
+      "sourceBlobSha": null,
+      "targetPath": "packages/c2c-review/tests/import-boundary.test.ts",
+      "migrationClass": "local",
+      "localPatchReason": "New WU-CGW-C2C-001B integration file; no corresponding file exists at the fixed upstream source commit."
     }
   ]
 }
