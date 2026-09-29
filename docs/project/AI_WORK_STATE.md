@@ -7,15 +7,11 @@
   "schema_version": 2,
   "branch": "work",
   "main_commit": "293341084ac7a1ddd2de12fede3706023f5b6474",
-  "observed_work_head_before_this_checkpoint": "7b6de71461277bf7bb8a3089bdf578cda992b571",
+  "observed_work_head_before_this_checkpoint": "7354dff3de49e9331ce98f998b6f51c3cc63b5d0",
   "checkpoint_id": "CGW-C2C-SKILL-001",
   "pending_changes": [
-    "docs/design/REQUIREMENTS.md",
-    "docs/design/BASIC_DESIGN.md",
-    "docs/design/DETAILED_DESIGN.md",
-    "docs/implementation/WORK_UNITS.md",
-    "docs/implementation/WU-CGW-C2C-001_PACKET.md",
-    "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md",
+    "docs/evidence/work-units/WU-CGW-C2C-SKILL-001.md",
+    "docs/project/TASKS.md",
     "docs/project/NEXT_WORK.md",
     "docs/project/AI_WORK_STATE.md"
   ],
@@ -29,8 +25,8 @@
     "CGW-AUD-002": "Done",
     "CGW-DES-001": "Done (prior Runtime proposal; superseded for current phase)",
     "CGW-C2C-001": "Ready (Deferred Runtime; 001A/B artifacts preserved)",
-    "CGW-C2C-SKILL-001": "Ready",
-    "CGW-C2C-SKILL-002": "Backlog",
+    "CGW-C2C-SKILL-001": "Done (design/packet static acceptance passed)",
+    "CGW-C2C-SKILL-002": "Ready",
     "CGW-C2C-SKILL-003": "Backlog",
     "CGW-JP-001": "Ready",
     "CGW-ENV-001": "Deferred (Runtime)"
@@ -45,7 +41,7 @@
     "No separate Reviewer context has been invoked. Same-context self-review cannot be marked independent. Save a Review Packet and use awaiting_review until a separate ChatGPT Web/Astra session independently fetches the named Candidate from GitHub with read-only access.",
     "Execution fields: Repository/Branch/Task/Run/Iteration/Attempt/Base/Candidate commit and tree/Tested tree/command/cwd/exitCode/start/finish/model/effort/output/source. Never guess unobserved metadata or retarget past runs. Verification=passed|failed|not_run|blocked; Review=accepted|findings|blocked|error.",
     "Finite retries/iterations/deadlines; cancel prevents next phase. Reviewer failure resumes review, never duplicates implementation. Finding fix binds to a new candidate and fresh Verification. Secret, token, cookie, key, and restricted log data never enter skill, evidence, packet, or GitHub.",
-    "Current WU: WU-CGW-C2C-SKILL-001B; base candidate is 7b6de71461277bf7bb8a3089bdf578cda992b571/tree 31ac9cd99be0e3497edbb8bc9e1d975c4f31f749. One static check attempt failed because REQUIREMENTS omitted current Review/Verification enums; add them and rerun against a committed candidate tree before accepting."
+    "WU-CGW-C2C-SKILL-001A/B design and packet work passed final static checks at Candidate commit 7354dff3de49e9331ce98f998b6f51c3cc63b5d0/tree f90a154a6acfe4e8ad0eda983c6fa9c831b977f4. Evidence WU-CGW-C2C-SKILL-001.md preserves earlier checker failures and final pass; independent design review was not run. Next WU-CGW-C2C-SKILL-002A creates six Skill files. WU-001A/B failure record remains unchanged."
   ]
 }
 ```

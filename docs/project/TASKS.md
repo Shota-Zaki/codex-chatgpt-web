@@ -1208,7 +1208,7 @@
     {
       "id": "CGW-C2C-SKILL-001",
       "purpose": "Skill-first phase設計・Task分離・Work Unit/Packet/checkpointを正本へ反映する",
-      "status": "Ready",
+      "status": "Done",
       "priority": "P0",
       "dependencies": [
         "CGW-AUD-002",
@@ -1283,7 +1283,7 @@
     {
       "id": "CGW-C2C-SKILL-002",
       "purpose": "単一のinstruction-only C2C Skillと必要なreferences/assetsを作成し、静的・安全fixture検証を行う",
-      "status": "Backlog",
+      "status": "Ready",
       "priority": "P0",
       "dependencies": [
         "CGW-C2C-SKILL-001"
