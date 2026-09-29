@@ -1,5 +1,7 @@
 # Codex implementation Packet: WU-CGW-C2C-001
 
+> **2026-09-30 Phase supersession:** This Packet describes the Deferred Node/MCP Runtime track. WU-CGW-C2C-001A/B already ran and their evidence remains authoritative for those attempts. Do not restart either implementation or mark the parent Done based on Skill work. Current-phase work uses [WU-CGW-C2C-SKILL_PACKET](WU-CGW-C2C-SKILL_PACKET.md); `packages/c2c-review`, source/license provenance and recorded pass/fail/not_run results remain intact.
+
 ## Goal / 現在地
 
 `Shota-Zaki/codex-chatgpt-web/work` に、C2Cを移植するための**通信しない独立Node package骨格**を作る。C2C本体・live review・開発ループは未統合。このPacketの完了はC2C統合完成ではない。

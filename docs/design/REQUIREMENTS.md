@@ -70,7 +70,9 @@
 
 ## Acceptance semantics
 
-- Execution statusは `passed | failed | not_run | blocked` を区別する。`passed` は対象commandが実行されexit code 0かつscope整合が確認できた場合だけ。未実行を成功へ変換しない。
+- Verification statusは `passed | failed | not_run | blocked`、Review statusは `accepted | findings | blocked | error` を区別する。`passed` は対象commandが実行されexit code 0かつscope整合が確認できた場合だけ。未実行を成功へ変換しない。
+- EvidenceはRepository/Task/Run/Iteration/Attempt、Base/Candidate commit/tree、Tested tree、command/cwd/exitCode/start/end、model/effort、output参照、取得元を持つ。未観測値は `unknown` とし、後続HEADへ過去結果を付け替えない。
+- digest/hashは記録内容の同一性検査には使えるが、独立実行や改ざん不能の証明ではない。
 - Review Snapshotは最低でも `repositoryId / taskId / runId / iteration / baseCommit / candidateCommit / testedTreeId` を持つ。
 - 最終Acceptanceに使うRequired Verificationは、原則として `testedTreeId` が `candidateCommit` のGit treeと一致すること。異なるtreeでの過去PASSは履歴として残せるがCurrent Validationには使わない。
 - Review verdictは `accepted | findings | blocked | error` を区別する。`blocked/error` は受入成功ではない。

@@ -201,7 +201,7 @@ saved valid locale   → existing locale      → existing interaction stage
 
 `launcher/electron/state.cjs` の `language: null` は保持する。初回表示の2行変更と回帰testだけを独立WUで扱う。他locale、native UI、limits UIの既存経路を利用する。
 
-## 7. Runtime ownership / Mac
+## 7. Runtime ownership / Mac — Deferred Runtime
 
 Desktop ownerまたはlaunchd ownerのどちらか1つがC2C lifecycleを所有する。Launcherが後から開いた場合は同じ製品namespace・Workspace・所有者が検証できたinstanceへattachする。旧`codex-with-chatgpt`のinstanceは自動取得・停止しない。
 

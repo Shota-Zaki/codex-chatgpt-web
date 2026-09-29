@@ -7,18 +7,17 @@
   "schema_version": 2,
   "branch": "work",
   "main_commit": "293341084ac7a1ddd2de12fede3706023f5b6474",
-  "observed_work_head_before_this_checkpoint": "07805ee4c10d26d59714eaa7875b4d72dc9bf135",
+  "observed_work_head_before_this_checkpoint": "7b6de71461277bf7bb8a3089bdf578cda992b571",
   "checkpoint_id": "CGW-C2C-SKILL-001",
   "pending_changes": [
-    "AGENTS.md",
-    "docs/project/PROJECT_BRIEF.md",
-    "docs/project/TASKS.md",
-    "docs/project/NEXT_WORK.md",
-    "docs/project/AI_WORK_STATE.md",
     "docs/design/REQUIREMENTS.md",
     "docs/design/BASIC_DESIGN.md",
     "docs/design/DETAILED_DESIGN.md",
-    "docs/design/C2C_MIGRATION_AUDIT.md"
+    "docs/implementation/WORK_UNITS.md",
+    "docs/implementation/WU-CGW-C2C-001_PACKET.md",
+    "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md",
+    "docs/project/NEXT_WORK.md",
+    "docs/project/AI_WORK_STATE.md"
   ],
   "source": {
     "repository": "Shota-Zaki/codex-with-chatgpt",
@@ -46,7 +45,7 @@
     "No separate Reviewer context has been invoked. Same-context self-review cannot be marked independent. Save a Review Packet and use awaiting_review until a separate ChatGPT Web/Astra session independently fetches the named Candidate from GitHub with read-only access.",
     "Execution fields: Repository/Branch/Task/Run/Iteration/Attempt/Base/Candidate commit and tree/Tested tree/command/cwd/exitCode/start/finish/model/effort/output/source. Never guess unobserved metadata or retarget past runs. Verification=passed|failed|not_run|blocked; Review=accepted|findings|blocked|error.",
     "Finite retries/iterations/deadlines; cancel prevents next phase. Reviewer failure resumes review, never duplicates implementation. Finding fix binds to a new candidate and fresh Verification. Secret, token, cookie, key, and restricted log data never enter skill, evidence, packet, or GitHub.",
-    "Current WU: WU-CGW-C2C-SKILL-001A. Previous NEXT_WORK was stale (pointed to already completed 001A); the next WU will update WORK_UNITS and the Skill Implementation Packet. Current design/task changes are uncommitted in isolated worktree; before commit re-fetch remote work and reapply on concurrency."
+    "Current WU: WU-CGW-C2C-SKILL-001B; base candidate is 7b6de71461277bf7bb8a3089bdf578cda992b571/tree 31ac9cd99be0e3497edbb8bc9e1d975c4f31f749. One static check attempt failed because REQUIREMENTS omitted current Review/Verification enums; add them and rerun against a committed candidate tree before accepting."
   ]
 }
 ```

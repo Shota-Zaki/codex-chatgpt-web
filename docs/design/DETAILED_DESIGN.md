@@ -42,7 +42,7 @@ For remote-reference use, use the existing GitHub connector to fetch the current
 
 ## Deferred Runtime specification
 
-Sections 1–7 and 9–10 below describe the former Node/MCP/Auth/Tunnel/Host/Launcher target. They are not implementation requirements for this Skill phase. Preserve them for a later explicit decision, along with `packages/c2c-review`'s local code, MIT notice and fixed-source provenance.
+Sections 2–7 and 9–10 below, plus C2C-specific parts of section 8, describe the former Node/MCP/Auth/Tunnel/Host/Launcher target. They are not implementation requirements for this Skill phase. The Japanese-first contract in section 1 and model-choice contract in section 8 remain applicable. Preserve the Runtime design for a later explicit decision, along with `packages/c2c-review`'s local code, MIT notice and fixed-source provenance.
 
 ## 1. Japanese-first contract
 

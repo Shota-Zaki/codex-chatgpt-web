@@ -8,6 +8,21 @@ Task状態は `docs/project/TASKS.md` が正本。この文書は有限scopeと�
 
 TASKS/NEXT_WORK/AI_WORK_STATEの3文書更新は別checkpoint WUにする。製品8ファイル＋Evidence1＋checkpoint3を9ファイルと数えない。下表の `P` は `packages/c2c-review`。新規pathは予定であって実装済みではない。依存追加でpackage/lockを変える場合も上限に含める。
 
+## Current phase — Skill-first
+
+`CGW-C2C-SKILL-*` は現行PhaseのSkill受入、既存 `CGW-C2C-*` はDeferred Runtime受入。前者の完了は後者のDoneを意味しない。WU-001A/Bはremote HEAD `07805ee4c10d26d59714eaa7875b4d72dc9bf135` 時点で既に実施済みのため、再実装しない。
+
+| WU | Parent Task | Exact scope / exit |
+| --- | --- | --- |
+| WU-CGW-C2C-SKILL-001A | CGW-C2C-SKILL-001 | AGENTS / Brief / Requirements / Basic / Detailed / Migration Audit / TASKS / NEXT_WORK / AI_WORK_STATE (9 files). Skill-first architecture and separate Runtime acceptance; no product code |
+| WU-CGW-C2C-SKILL-001B | CGW-C2C-SKILL-001 | Requirements correction from static check, Basic/Detailed deferred labels, WORK_UNITS, new Skill Packet, legacy C2C Packet deferral notice, NEXT_WORK / AI_WORK_STATE (8 files) |
+| WU-CGW-C2C-SKILL-001C | CGW-C2C-SKILL-001 | WU-001A/B verification Evidence plus TASKS / NEXT_WORK / AI_WORK_STATE checkpoint (4 files). Candidate/tested tree must name the design+packet commit, not this later Evidence commit |
+| WU-CGW-C2C-SKILL-002A | CGW-C2C-SKILL-002 | `.agents/skills/c2c/{SKILL.md,references/workflow.md,references/review.md,references/evidence.md,assets/review-request.md,assets/review-result.json}` (6 files). Instruction-only; no runtime/script |
+| WU-CGW-C2C-SKILL-002B | CGW-C2C-SKILL-002 | Static validation and safe fixture scenarios recorded to `docs/evidence/work-units/WU-CGW-C2C-SKILL-002.md`; save separate Reviewer packet and checkpoint (5 files). No live Reviewer or Native Skill acceptance is inferred |
+| WU-CGW-C2C-SKILL-003A | CGW-C2C-SKILL-003 | Native Skill discovery/call, GitHub remote-reference retrieval, and separate Reviewer permission/independent-fetch checks in distinct Evidence fields; unavailable paths remain `not_run` / `awaiting_review` |
+
+WU-CGW-C2C-SKILL-002A review state stays `awaiting_review` until a different context has independently read the GitHub candidate. Same-context review cannot close that gate.
+
 ## Audit / design
 
 | WU | 親Task | 有限scope / 出口 |
@@ -24,7 +39,9 @@ TASKS/NEXT_WORK/AI_WORK_STATEの3文書更新は別checkpoint WUにする。製�
 
 AUD-002A/B1/B2/B3/C1/C2/C3の静的確認記録は `docs/evidence/audit/` に保存済み。固定source commitに対する主要実装・全test本文・PoC・frozen lock/推移的依存・Host接合点の静的監査は完了し、CGW-AUD-002はDone。test/typecheck/build/live connector/配布/Mac24hは別の動的Acceptanceであり、静的監査DoneをそのPASSへ読み替えない。監査対象source Repositoryへは書き込まない。
 
-## Initial package — 改訂後の分割
+## Initial package — Deferred Runtime scaffold (existing work retained)
+
+`WU-CGW-C2C-001A/B` are already committed with separate Evidence. Do not repeat or delete them. The parent's Runtime-only Required Verification remains incomplete; the failure statuses in WU-001B remain attached to its own candidate tree.
 
 | WU | 親Task | exact scope / 出口 |
 | --- | --- | --- |
