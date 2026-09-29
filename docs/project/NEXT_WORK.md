@@ -1,51 +1,47 @@
 # Next Work
 
-このJSON blockだけを次WUの正本とする。固定sourceの静的監査と統合設計は完了。製品コードのC2C統合はまだ開始していない。
+このJSON blockだけを次WUの正本とする。2026-09-30にremote work HEADと既存Evidenceを再照合した。001A/Bは既に実施済みなので再実装せず、Skill-first設計切替WUから進める。
 
 ```json
 {
   "schema_version": 2,
   "work_unit": {
-    "task_id": "CGW-C2C-001",
-    "work_unit_id": "WU-CGW-C2C-001A",
-    "goal": "通信しない独立Node packageの設定・frozen lock・provenance骨格だけを作り、C2C Runtimeをまだ起動しない",
+    "task_id": "CGW-C2C-SKILL-001",
+    "work_unit_id": "WU-CGW-C2C-SKILL-001A",
+    "goal": "Skill-firstへのPhase方針・受入境界・既存Runtime保留を正本へ反映し、失効した旧NEXTをremote work HEADとA/B Evidenceへ照合する",
     "implementer": "Codex",
-    "complexity": "medium",
-    "recommended_capability": "routine-implementation",
+    "complexity": "high",
+    "recommended_capability": "architecture-sensitive",
     "selected_model": "runtime_user_choice",
     "selected_effort": "runtime_user_choice",
     "scope": [
-      "packages/c2c-review/package.json",
-      "packages/c2c-review/pnpm-lock.yaml",
-      "packages/c2c-review/pnpm-workspace.yaml",
-      "packages/c2c-review/tsconfig.json",
-      "packages/c2c-review/vitest.config.ts",
-      "packages/c2c-review/LICENSE",
-      "packages/c2c-review/UPSTREAM.json",
-      "docs/evidence/work-units/WU-CGW-C2C-001A.md"
+      "AGENTS.md",
+      "docs/project/PROJECT_BRIEF.md",
+      "docs/design/REQUIREMENTS.md",
+      "docs/design/BASIC_DESIGN.md",
+      "docs/design/DETAILED_DESIGN.md",
+      "docs/design/C2C_MIGRATION_AUDIT.md",
+      "docs/project/TASKS.md",
+      "docs/project/NEXT_WORK.md",
+      "docs/project/AI_WORK_STATE.md"
     ],
     "preconditions": [
-      "remote work/mainとローカルbranch/statusを再取得し、並行変更を確認する",
-      "TASKS.mdでCGW-AUD-002=Done、CGW-DES-001=Done、CGW-C2C-001=Readyを確認する",
-      "docs/implementation/WU-CGW-C2C-001_PACKET.mdと現在の対象pathを読み、既存ファイルがあれば上書き前に内容を確認する",
-      "現在のCodex runtime catalogから利用可能なmodel/effortをユーザーが選択し、Run Evidenceへ記録する。Taskからmodel IDを推測固定しない"
+      "GitHub remote work/main HEADを再取得する。直近観測work=07805ee4c10d26d59714eaa7875b4d72dc9bf135、main=293341084ac7a1ddd2de12fede3706023f5b6474。",
+      "001A/001B candidate、Evidence、失敗をremoteから読み直し再実装しない。",
+      "参照sourceはcodex-with-chatgpt@89af4fa34952fe58e017b095ae2f793420cf05b0固定、読み取りのみ。"
     ],
     "steps": [
-      "source固定点Shota-Zaki/codex-with-chatgpt@89af4fa34952fe58e017b095ae2f793420cf05b0のpackage/lock/workspace/tsconfig/vitest/LICENSEを固定blobから取得する",
-      "package名だけ@codex-chatgpt-web/c2c-reviewへ局所調整しprivate化する。未移植のbin/dev/service/runtime scriptを登録しない",
-      "source pnpm-lock.yamlの解決をそのまま保持しlatestを再解決しない。pnpm-workspace.yamlのallowBuildsはesbuildだけを維持する",
-      "UPSTREAM.jsonへsourceRepository/sourceCommit/sourceVersion/sourcePath/sourceBlobSha/targetPath/migrationClass/localPatchReasonを記録する。.npmrcのcache配置を非採用とした理由も残す",
-      "root Bun package/lock、Launcher、main、source Repository、Credential、Tunnel、OS serviceを変更しない",
-      "このWUではsrc/index.ts、Bridge、MCP、OAuth、Tunnel、serviceを作らず、通信・listen・spawn・live接続を開始しない",
-      "依存/provenance/差分scopeを確認し、実行していないtest/typecheck/buildをPASSと記録しない",
-      "workへ小さくcommit/pushし、GitHubから8ファイルとcommitをreadbackする。WU-Bへ進む前に独立差分確認する"
+      "Skill + existing Codex Runtime + GitHubへのPhase切替を正本へ反映する。",
+      "Skill acceptanceとDeferred Runtime acceptance、Reviewer権限、Native/remote-reference、Evidence/Done semanticsを分ける。",
+      "既存骨格/provenance/license、001A/B Evidenceを保持しfailed/not_run結果を変更しない。",
+      "remote work HEADと変更pathを比較してworkへ通常commit/readbackする。"
     ],
-    "exit_condition": "8ファイルの設定/provenance骨格が固定source由来で作成され、無関係な本体差分がなく、GitHub readback済み。Runtime起動・C2C機能Acceptance・live接続は未実施のまま残す",
+    "exit_condition": "current design docs/checkpoints agree on Skill-first and existing A/B results remain unchanged; next finite WU is the implementation packet update",
     "verification_ids": [
-      "V-C2C-001"
+      "V-SKILL-DES-001"
     ],
-    "implementation_packet": "docs/implementation/WU-CGW-C2C-001_PACKET.md"
+    "implementation_packet": "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
   },
-  "reason": "固定sourceの静的監査、要件、基本設計、詳細設計、Acceptance/Verification、Task graph、Work Unit分割、最初のImplementation Packetまで確定し、実装開始条件が揃ったため"
+  "reason": "Remote work already contains WU-001A/B; the prior NEXT_WORK pointed at completed 001A, so this phase switch starts with current-state reconciliation and design supersession."
 }
 ```

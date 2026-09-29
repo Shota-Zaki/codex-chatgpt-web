@@ -172,7 +172,7 @@
     },
     {
       "id": "CGW-C2C-001",
-      "purpose": "通信しない隔離Node package骨格を作る",
+      "purpose": "[Deferred Runtime] Node/MCP C2C skeletonの全Required Verificationを満たす。WU-CGW-C2C-001A/Bは既存成果として保持し再実装しない",
       "status": "Ready",
       "priority": "P0",
       "dependencies": [
@@ -239,7 +239,9 @@
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md",
         "docs/implementation/WU-CGW-C2C-001_PACKET.md"
-      ]
+      ],
+      "phase": "Deferred Runtime",
+      "phase_note": "WU-CGW-C2C-001A/BとEvidenceは既存成果。Root bun testに4 failures、bun run verifyはadvisoryでfailed。Runtimeのみを延期し、履歴をDoneへ変換しない。"
     },
     {
       "id": "CGW-C2C-002",
@@ -297,7 +299,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-C2C-003",
@@ -352,7 +355,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-C2C-004",
@@ -407,7 +411,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-C2C-005",
@@ -467,7 +472,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-C2C-006",
@@ -526,7 +532,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-C2C-007",
@@ -583,7 +590,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-ENV-001",
@@ -632,7 +640,8 @@
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md",
         "docs/design/C2C_MIGRATION_AUDIT.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-LOOP-001",
@@ -691,7 +700,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-LOOP-002",
@@ -746,7 +756,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-LAUNCHER-001",
@@ -803,7 +814,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-PKG-001",
@@ -860,7 +872,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-MAC-001",
@@ -915,7 +928,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-PARITY-001",
@@ -967,7 +981,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase": "Deferred Runtime"
     },
     {
       "id": "CGW-JP-001",
@@ -1187,6 +1202,199 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
+      ],
+      "phase": "Deferred Runtime"
+    },
+    {
+      "id": "CGW-C2C-SKILL-001",
+      "purpose": "Skill-first phase設計・Task分離・Work Unit/Packet/checkpointを正本へ反映する",
+      "status": "Ready",
+      "priority": "P0",
+      "dependencies": [
+        "CGW-AUD-002",
+        "CGW-DES-001"
+      ],
+      "phase": "Skill-first",
+      "scope": [
+        "AGENTS.md",
+        "docs/project/PROJECT_BRIEF.md",
+        "docs/design/REQUIREMENTS.md",
+        "docs/design/BASIC_DESIGN.md",
+        "docs/design/DETAILED_DESIGN.md",
+        "docs/design/C2C_MIGRATION_AUDIT.md",
+        "docs/implementation/WORK_UNITS.md",
+        "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md",
+        "docs/project/TASKS.md",
+        "docs/project/NEXT_WORK.md",
+        "docs/project/AI_WORK_STATE.md"
+      ],
+      "acceptance": [
+        {
+          "id": "AC-SKILL-DES-001",
+          "condition": "Skill-first target flow、Repository/runtime境界、Native/remote-reference distinction、Evidence/Review/Done gateを正本へ反映する"
+        },
+        {
+          "id": "AC-SKILL-DES-002",
+          "condition": "Runtime acceptanceをDeferredに分離し、既存package skeleton/source provenance/license/A/B Evidenceとfailed resultsを保持する"
+        },
+        {
+          "id": "AC-SKILL-DES-003",
+          "condition": "有限WUと新Skill Taskを追加し、古いNEXT_WORKをremote commit/Evidenceと照合して更新する"
+        }
+      ],
+      "verification": [
+        {
+          "id": "V-SKILL-DES-001",
+          "required": true,
+          "method": "正本間の状態・名称・dependencyとLegacy Runtime条件を静的照合してGitHub readbackする。独立工程reviewは別状態として記録する",
+          "acceptance": [
+            "AC-SKILL-DES-001",
+            "AC-SKILL-DES-002",
+            "AC-SKILL-DES-003"
+          ],
+          "targets": [
+            "AGENTS.md",
+            "docs/project/PROJECT_BRIEF.md",
+            "docs/design/REQUIREMENTS.md",
+            "docs/design/BASIC_DESIGN.md",
+            "docs/design/DETAILED_DESIGN.md",
+            "docs/design/C2C_MIGRATION_AUDIT.md",
+            "docs/implementation/WORK_UNITS.md",
+            "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md",
+            "docs/project/TASKS.md",
+            "docs/project/NEXT_WORK.md",
+            "docs/project/AI_WORK_STATE.md"
+          ]
+        }
+      ],
+      "risk": "古いNode/MCP設計を現行scopeと誤認すると、Runtime受入への誤依存や完了条件誤判定が起きる",
+      "complexity": "high",
+      "recommended_capability": "architecture-sensitive",
+      "implementation_packet": {
+        "state": "ready",
+        "path": "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
+      },
+      "references": [
+        "docs/evidence/work-units/WU-CGW-C2C-001A.md",
+        "docs/evidence/work-units/WU-CGW-C2C-001B.md",
+        "docs/design/C2C_MIGRATION_AUDIT.md"
+      ]
+    },
+    {
+      "id": "CGW-C2C-SKILL-002",
+      "purpose": "単一のinstruction-only C2C Skillと必要なreferences/assetsを作成し、静的・安全fixture検証を行う",
+      "status": "Backlog",
+      "priority": "P0",
+      "dependencies": [
+        "CGW-C2C-SKILL-001"
+      ],
+      "phase": "Skill-first",
+      "scope": [
+        ".agents/skills/c2c/SKILL.md",
+        ".agents/skills/c2c/references/workflow.md",
+        ".agents/skills/c2c/references/review.md",
+        ".agents/skills/c2c/references/evidence.md",
+        ".agents/skills/c2c/assets/review-request.md",
+        ".agents/skills/c2c/assets/review-result.json",
+        "docs/evidence/work-units/WU-CGW-C2C-SKILL-002.md"
+      ],
+      "acceptance": [
+        {
+          "id": "AC-SKILL-001",
+          "condition": "有効なname/descriptionと発火・対象外・前提・手順・終了条件を備えた唯一の入口があり、3 referencesと2 assetsを参照する"
+        },
+        {
+          "id": "AC-SKILL-002",
+          "condition": "復元/implement/review/fix/resumeをRepository/commit/Evidenceへ束縛し、誤対象・同context自己Review・未検証Done・duplicate実装を拒否する"
+        },
+        {
+          "id": "AC-SKILL-003",
+          "condition": "有限retry/iteration/deadline/cancel、Secret除外、権限境界、source/license/provenanceを守る"
+        }
+      ],
+      "verification": [
+        {
+          "id": "V-SKILL-STATIC-001",
+          "required": true,
+          "method": "manifest/参照先/状態遷移/schema/acceptanceを静的検証し、8 fixture caseの結果と限界をEvidenceへ記録する",
+          "acceptance": [
+            "AC-SKILL-001",
+            "AC-SKILL-002",
+            "AC-SKILL-003"
+          ],
+          "targets": [
+            ".agents/skills/c2c/**",
+            "docs/evidence/work-units/WU-CGW-C2C-SKILL-002.md"
+          ]
+        }
+      ],
+      "risk": "誤Repo/Candidateや未実行検証で誤ってDoneとする",
+      "complexity": "high",
+      "recommended_capability": "architecture-sensitive",
+      "implementation_packet": {
+        "state": "ready",
+        "path": "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
+      },
+      "references": [
+        "docs/design/DETAILED_DESIGN.md",
+        "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
+      ]
+    },
+    {
+      "id": "CGW-C2C-SKILL-003",
+      "purpose": "Native Skill読込、GitHub remote-reference利用、独立Reviewer境界と手動Loop受入を環境別に確認する",
+      "status": "Backlog",
+      "priority": "P0",
+      "dependencies": [
+        "CGW-C2C-SKILL-002"
+      ],
+      "phase": "Skill-first",
+      "scope": [
+        "docs/evidence/work-units/WU-CGW-C2C-SKILL-003.md",
+        "docs/project/TASKS.md",
+        "docs/project/NEXT_WORK.md",
+        "docs/project/AI_WORK_STATE.md"
+      ],
+      "acceptance": [
+        {
+          "id": "AC-SKILL-004",
+          "condition": "Native Skill読込/呼出とremote-reference取得/利用を別々に確認し、不能な経路をnot_runとして導入/開始手順を保存する"
+        },
+        {
+          "id": "AC-SKILL-005",
+          "condition": "安全な別Reviewerが指定CandidateをGitHubから独立取得しread-only境界を満たす場合のみReviewをaccepted/findingsと記録し、不在時はawaiting_reviewを維持する"
+        },
+        {
+          "id": "AC-SKILL-006",
+          "condition": "fixture結果と実運用Review/loop受入を区別し、全Required Verification/Review gateの完了前にDoneとしない"
+        }
+      ],
+      "verification": [
+        {
+          "id": "V-SKILL-OPS-001",
+          "required": true,
+          "method": "環境上の実証ログを確認し、別context/権限境界がなければawaiting_reviewまたはblockedにする",
+          "acceptance": [
+            "AC-SKILL-004",
+            "AC-SKILL-005",
+            "AC-SKILL-006"
+          ],
+          "targets": [
+            "docs/evidence/work-units/WU-CGW-C2C-SKILL-003.md"
+          ]
+        }
+      ],
+      "risk": "SkillのcommitだけをNative discoveryやIndependent operational acceptanceと誤報する",
+      "complexity": "high",
+      "recommended_capability": "architecture-sensitive",
+      "implementation_packet": {
+        "state": "ready",
+        "path": "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
+      },
+      "references": [
+        "docs/design/REQUIREMENTS.md",
+        "docs/design/DETAILED_DESIGN.md",
+        "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
       ]
     }
   ]

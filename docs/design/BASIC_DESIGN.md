@@ -1,8 +1,39 @@
 # Basic Design
 
-要求は[REQUIREMENTS](REQUIREMENTS.md)、移植判断は[C2C_MIGRATION_AUDIT](C2C_MIGRATION_AUDIT.md)。この文書は構成・責務・権限境界・利用フローの正本。新規構成要素はまだ製品コードへ統合されていない。
+要求は[REQUIREMENTS](REQUIREMENTS.md)、移植判断は[C2C_MIGRATION_AUDIT](C2C_MIGRATION_AUDIT.md)。この文書は構成・責務・権限境界・利用フローの正本。
+
+## 2026-09-29 Phase amendment: Skill-first architecture
+
+このPhaseの製品フローはRepository Skillと既存Codex/GitHub機能だけで構成する。新規C2C server、Node Runtime統合、OAuth、Pairing、Tunnel、daemon、Evidence broker、Launcher統合はDeferred。
+
+```text
+ChatGPT Web / Astra: PLAN, Acceptance, Implementation Packet
+        ↓ GitHub work
+Codex Skill $c2c: state recovery and WU routing
+        ↓
+Selected Codex context: implement → verify → candidate commit
+        ↓ GitHub read-only retrieval by a separate context
+Independent Reviewer: accepted | findings | blocked | error
+        ↓
+Finding → bounded Codex fix → new candidate verification → new review
+        ↓
+Done only when required verification is candidate-bound and passed,
+independent review is accepted, and no blocking finding remains
+```
+
+The single entry point is `.agents/skills/c2c/SKILL.md`; `references/workflow.md`, `review.md`, `evidence.md` contain conditional detail, and `assets/review-request.md` / `review-result.json` define handoff format. The skill is instruction-only and consumes natural-language user intent. `$c2c implement`, `$c2c review`, `$c2c fix`, `$c2c resume` are invocation guidance, not executable CLI commands.
+
+GitHub `work` is the source of truth. Native skill discovery and remote-reference usage are distinct acceptance paths. Native discovery must be confirmed by actual loading and invocation; a commit alone does not prove it. Remote-reference starts by fetching current `work` files through the existing GitHub connection. When an execution environment cannot run commands, preserve `not_run` and continue read/edit/static work where possible.
+
+Review packet binds repository, branch, task/run/iteration, base/candidate commit, acceptance, verification/evidence, scope, read-only instructions and the result schema. The reviewer fetches the named candidate and relevant source/evidence from GitHub. A missing or unsafe separate context yields `awaiting_review`/`blocked`; the implementer does not self-certify independence. Reviewer returns a result; the implementer saves it and updates Task/checkpoint state.
+
+## Deferred Runtime design
+
+The Runtime components and detailed contracts below remain reference material for a future explicit phase. They do not authorize new Runtime implementation in this phase. Existing code and records are preserved.
 
 ## 1. Components
+
+**Deferred Runtime target (not current phase architecture):**
 
 ```text
 User / ChatGPT Web / Astra
@@ -56,7 +87,7 @@ Host --finite Fix Packet--> user-selected Codex implementer
 
 C2Cを独立processとして統合することと、製品を別々に操作させることは同義ではない。1つのHostから管理しつつ、実装権限とReviewer権限を内部で分離する。
 
-## 2. Data ownership
+## 2. Data ownership — Deferred Runtime
 
 保存先は起動時にHostが検証し、Workspace外の製品private namespaceへ設定する。macOS候補は `~/Library/Application Support/codex-chatgpt-web/c2c-review`。旧source状態を自動移行・再利用しない。
 
@@ -72,7 +103,7 @@ C2Cを独立processとして統合することと、製品を別々に操作さ�
 
 Codexのsandbox `writable_roots` へC2C private root全体を追加するsource helperは採用しない。記録のhashは同一性・改変検出の材料であり、敵対的な同一OS userに対する実行の暗号学的証明ではない。
 
-## 3. Integration sequence
+## 3. Integration sequence — Deferred Runtime
 
 **Gate A — Static audit / design:** 固定sourceの主要実装、全test本文、PoC、依存lock、Host接合点を分類し、Requirements / Basic / Detailed / Task graph / initial Packetを確定する。2026-09-26時点で固定sourceの静的監査は完了。動的Acceptanceは含めない。
 
@@ -116,7 +147,7 @@ Run開始後にmodelが消失・利用不能・capability不整合になった�
 
 Finding修正iterationは直前のmodel選択を表示上保持してよいが、自動確定しない。ユーザーは同じmodelを再選択しても、別modelへ明示変更してもよい。各attemptの実model/effortはExecution Evidenceへ記録する。
 
-## 5. Product usage flow
+## 5. Product usage flow — superseded for the current phase by the Skill-first flow above
 
 ### 5.1 PLAN
 
@@ -184,9 +215,9 @@ C2Cのheadless受入と既存Web RuntimeのGUI/認証状態を区別する。bro
 
 採用。保存stateの既定値は変更しない。
 
-### D-002: 外部C2C専用利用から製品内再利用へ変更
+### D-002: 外部C2C専用利用から製品内再利用へ変更 — superseded for this phase
 
-採用。旧「このRepositoryにC2Cを追加しない」はsuperseded。重複rewriteを避け、source由来のNode package/child processを局所的に組み込む。
+当時は採用したが、2026-09-29のPhase判断でRuntime移植をDeferredに変更。既存 `packages/c2c-review` 骨格とsource/license/provenance/Evidenceは保持し、新しいSkillはそこへ依存しない。
 
 ### D-003: package/認証/管理面の分離
 
@@ -213,6 +244,8 @@ C2Cのheadless受入と既存Web RuntimeのGUI/認証状態を区別する。bro
 採用。2026-09-26に固定sourceの静的監査を閉じたが、test/build/live connector/配布/Mac24h/Security parityは各Taskの実行Evidenceが必要。
 
 ## 9. Open Decision / Deferred
+
+**Current phase:** Skill-first workflow and its verification/review acceptance are in scope. All Node Runtime, MCP/Auth/Tunnel/service, Host adapter, automated loop, Launcher, packaging, Mac operation and source parity work is Deferred. Their existing design and acceptance remain for a later decision.
 
 - **Deferred — Launcher UI layout:** 表示項目と操作契約は確定したが、具体的な画面配置はmanual Loop受入後に既存Launcher構造を再確認して決める。
 - **Deferred — production lifecycle owner default:** Desktop owner / launchd ownerの排他契約は確定。Mac 24h運用でどちらを標準にするかは実装・実機受入時に決める。

@@ -135,8 +135,16 @@ CGW-ENV-001だけをDeferredとし、別Workspaceや認証変更で迂回せず�
 
 readOnlyHintはmetadataでありOS sandboxではない。child processも同一OS userの権限を自動的には減らさない。保証対象はReviewer経路からWorkspace write/任意shell/管理操作を公開しないこと。敵対的な同一OS userまで隔離できるとは未検証で主張しない。
 
-## 6. 採用構成と次工程
+## 6. 当時の採用構成と次工程 — 2026-09-29にPhase supersede
 
-独立Node package/child processと小さいBun Host adapterを採用する。C2CはAIモデルではなく、別Reviewer contextが証拠を取得するread-onlyデータ面。
+以下は監査完了時点の旧Runtime案を履歴として残す。最新Phase方針は [PROJECT_BRIEF](../project/PROJECT_BRIEF.md)、[REQUIREMENTS](REQUIREMENTS.md)、[BASIC_DESIGN](BASIC_DESIGN.md)、[DETAILED_DESIGN](DETAILED_DESIGN.md) を参照する。
 
-初回Implementation PacketはCodex実装担当向けに、設定8ファイル→inert entry/test等4ファイル→checkpoint文書の順へ分割する。特定modelへ固定せず、Taskには推奨capabilityだけを持たせ、実model/effortは実行時にユーザーが選択する。Packetの送信・製品コード実装はまだ行っていない。設計正本/Acceptance/Task graphの確定後、単体受入→手動Review/Fix/再Review→自動化/Launcherの順序を維持する。
+2026-09-30に、本PhaseのC2C方針を「独自Node Runtime/MCP/OAuth/Tunnelを製品内へ移植」から「Skill + 既存Codex Runtime + 既存GitHub連携」へ切り替えた。Runtime専用acceptanceはDeferred trackに分離する。`packages/c2c-review`、固定sourceの監査結果、MIT/license/provenance、WU-CGW-C2C-001A/B Evidenceは削除せず変更しない。
+
+旧Finding F01–F09はRuntimeを将来再開する際の監査情報として保存する。今回、これらをSkill実装の開始条件や再移植の承認に使わず、既存C2C packageをSkillからimport/dependencyしない。現在の受入対象はSkillのmanifest/workflow、Candidate/Evidence/Review境界、静的・fixture検証、Native Skill/remote-referenceの別経路である。
+
+### 過去のRuntime案（Deferred）
+
+当時の設計案は独立Node package/child processと小さいBun Host adapterだった。今回のPhaseでは採用しない。
+
+当時の初回Packetは設定8ファイル→inert entry/test等4ファイル→checkpoint文書に分割された。WU-CGW-C2C-001A/Bとその結果は完了履歴として残す。今後のRuntime単体受入・手動Loop・自動化/LauncherはDeferredとする。

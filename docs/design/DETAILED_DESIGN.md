@@ -2,6 +2,48 @@
 
 構成は[BASIC_DESIGN](BASIC_DESIGN.md)、要求は[REQUIREMENTS](REQUIREMENTS.md)。以下は実装契約であり、現時点でAPIやpackageが存在するという意味ではない。
 
+## 2026-09-29 Current phase contract: repository Skill
+
+この節が今回のphase authority。以下の旧Node/MCP/Host設計は将来Runtime版のDeferred specificationとして保存し、Skillをそれらへ依存させない。
+
+### Entry and invocation
+
+`.agents/skills/c2c/SKILL.md` is the single repository entry. Its valid frontmatter uses only `name` and `description`; it includes trigger conditions, exclusions, prerequisites, workflow, and stop conditions. The body links the three focused references and two templates. No custom MCP tool name, CLI subcommand, YAML extension, external API, or runtime code is introduced. Operation phrases `$c2c`, `$c2c implement`, `$c2c review`, `$c2c fix`, `$c2c resume` select intent inside the Skill.
+
+At every start or resume, fetch the latest remote `work` HEAD and the authoritative `TASKS`, `NEXT_WORK`, `AI_WORK_STATE`, packet, relevant Evidence, and exact candidate files. Reconcile file/commit/checkpoint facts before choosing one executable WU. If a WU is already complete, continue with its uncompleted verification/review/checkpoint stage; do not repeat its implementation. Serialize writes to a repository/branch.
+
+### Skill phase state transition
+
+```text
+PLAN → IMPLEMENT → VERIFY → CANDIDATE_COMMIT → AWAITING_REVIEW
+  → REVIEW_ACCEPTED → DONE
+  → REVIEW_FINDINGS → FIX → VERIFY(new candidate) → AWAITING_REVIEW
+```
+
+`blocked` and `error` are explicit terminal outcomes for the current attempt. `cancel` stops before a new phase begins. Retries, total iterations, phase deadline and each command timeout are finite, with values stored as ordinary Task/run configuration rather than model constants. On Review transport failure, resume from `AWAITING_REVIEW`; never repeat an already committed implementation. On Finding, allocate a new iteration/attempt and bind Verification and Review to the new candidate tree.
+
+### Execution Evidence and Candidate identity
+
+Store run records in the existing `docs/evidence/` tree. Include Repository/Branch/Task/Run/Iteration/Attempt; base commit/tree; candidate commit/tree; tested tree; command, cwd, exit code, start/finish time; selected model/effort or `unknown`; output reference and source of observation (tool log, CI, or implementer self-report). Do not invent commands, times, model metadata, or outputs. Keep candidate code commit distinct from a later Evidence-only commit. Never rewrite a prior record's candidate to current HEAD.
+
+Verification enum is `passed | failed | not_run | blocked`; Review enum is `accepted | findings | blocked | error`. A failed, missing, truncated, stale or differently scoped result never becomes passed/accepted. A hash establishes content identity only, not tamper-proof or independent execution proof. Required Verification passes only when the tested tree is the candidate tree.
+
+### Review packet and result
+
+Packet fields: repository/branch/task/run/iteration, base and candidate commits, acceptance, Verification and Evidence refs, changed scope, a read-only instruction, and expected ReviewResult format. Reviewer obtains changed files/diff plus needed source and Evidence from GitHub by itself; an implementer summary is context only. Reject a wrong repo, branch, base/candidate, stale commit, incomplete diff, secret-bearing/unavailable input, or same-context self-review as independent evidence. Do not give the reviewer write, shell, or repository-admin capabilities. Reviewer returns only `ReviewResult`; implementer persists it, updates Task state, and carries any finding into a bounded fix packet.
+
+If no separate reviewer context with an adequate read-only GitHub boundary is available, save the packet and set `awaiting_review`. If the boundary cannot be established, the acceptance remains `blocked`; never state independent review or full operational acceptance.
+
+### Native and remote-reference use
+
+The repository Skill can be offered as a native skill only in a Codex environment that actually discovers it. Confirm reading and `$c2c` invocation in a supported runtime. If unavailable, record `not_run` and give installation/use instructions without changing user-wide settings or credentials.
+
+For remote-reference use, use the existing GitHub connector to fetch the current `work` `SKILL.md` and only the references/assets it links. Provide a short start prompt asking Codex to follow those remote instructions. State that this manual retrieval path is not native discovery. Check an existing permitted environment/CI for scripts or tests; if none can execute them, record `not_run` while continuing static checks.
+
+## Deferred Runtime specification
+
+Sections 1–7 and 9–10 below describe the former Node/MCP/Auth/Tunnel/Host/Launcher target. They are not implementation requirements for this Skill phase. Preserve them for a later explicit decision, along with `packages/c2c-review`'s local code, MIT notice and fixed-source provenance.
+
 ## 1. Japanese-first contract
 
 対象は `launcher/src/App.tsx` の次の2箇所だけ。
@@ -20,7 +62,7 @@ const language = snapshot.state.language ?? "ja";
 
 一般UIはi18n.ts、Limitsはlimits-copy.ts、localeはlanguages.json、native dialog/menuは既存native copyを利用する。翻訳対象は表示文言。表示とmachine matchが混在する診断はlocalizeRuntimeMessage等で分離してから翻訳する。selector/connector名/MCP名/endpoint/CLI option/protocol fieldは維持する。
 
-## 2. Package / entry / provenance
+## 2. Package / entry / provenance — Deferred Runtime
 
 `packages/c2c-review/` にNode/TypeScript packageを置く。sourceのpnpm-lock.yaml、tsconfig、test方式、MIT通知を保持し、`UPSTREAM.json`へ次を記録する。
 
@@ -38,7 +80,7 @@ Nodeのserve入口だけがprivacy bootstrapを適用してBridgeを起動する
 
 公開前のfixture testは一時Workspace・合成canary・隔離state・loopbackだけを使える。実Workspaceでの起動や外部公開とは区別する。
 
-## 3. WorkspacePolicy / RepositoryView
+## 3. WorkspacePolicy / RepositoryView — Deferred Runtime
 
 Hostが登録したWorkspace rootとRepository registryを使用する。登録はprivate管理操作でありMCP toolではない。Repository入力はserver側IDまたはregistryに登録した相対識別子に解決し、任意のabsolute pathをRepositoryとして採用しない。
 
@@ -59,7 +101,7 @@ root realpathがWorkspace内、選択Repo内のpathがそのRepo内、Gitが報�
 
 未知ID、未登録、権限外は拒否する。registryに載せるRepo一覧自体もcallerの共有範囲でfilterする。sourceのWorkspace IDと新Repository IDは別物。旧ID/旧記録を現在Repoへ推測で再割当てしない。
 
-## 4. Git / review snapshot
+## 4. Git / review snapshot — Deferred Runtime
 
 既存git_diffのunstaged/staged/headは維持する。`head`は作業ツリー対HEADである。commit間比較には追加mode `range` と対になった `base_commit` / `head_commit` を設ける。両commitは選択Repo内で解決した完全なobject IDに固定する。legacy clientへのschema変更点をfixtureと互換表へ記録する。
 
@@ -91,7 +133,7 @@ range diffはrenameの旧/新path両側を検査し、Secretを含むrename全�
 
 ページングのcursorはsnapshotIdに結び付ける。途中で対象が変わった結果、取得失敗、上限超過、不完全結果を空diff成功にしない。実行されたGit commandの失敗と非Git Repoを区別する。UTF-8境界・巨大行・offset終端を試験する。
 
-## 5. Execution evidence v2
+## 5. Execution evidence v2 — Deferred Runtime implementation
 
 旧recordは読める互換資料として残すが、Repo/commitへ結び付いていないrecordは `unbound` で、統合受入に使用しない。`test_status`はtestを実行しない。
 
@@ -123,7 +165,7 @@ Host recorderが実command開始/終了を観測してinboxへ記録する。Cod
 
 test対象code commitまたはtested treeを実行前後に確認し、candidateに結び付ける。後から現在HEADを古いrecordへ補完しない。証跡・TASKSを保存する後続commitはcode anchorと別に記録する。後続差分が宣言されたEvidence/Project文書だけであることを独立確認した場合に限り、Accepted code anchorを維持できる。製品source/test/config/lockが変わればCurrent Validationはstaleとなり、再検証が必要。
 
-## 6. Auth / MCP / management
+## 6. Auth / MCP / management — Deferred Runtime
 
 Reviewer用allowlistは以下の9つだけ。
 
@@ -147,7 +189,7 @@ OAuth metadataのbase URLは信頼済み設定から構成し、任意Host/forwa
 
 Admin APIはloopback socket、private admin token、proxy経由拒否を維持する。Host adapterから呼べるrouteも固定allowlistにする。管理tokenとOAuth tokenをRenderer、Codex Implementation Packet、MCP outputへ返さない。公開healthはservice/statusだけ。詳細identityはprivate管理面で確認する。
 
-## 7. Node runtime / Host adapter
+## 7. Node runtime / Host adapter — Deferred Runtime
 
 privacy bootstrapはすべてのNode起動入口で適用する。本体Bunには副作用を与えない。C2C fetchは許可したloopbackと最小healthのみ、外部healthでは元header/Cookieを引き継がずredirect拒否。Git/rg/cloudflaredにはOS/C2Cの必要envだけを渡す。Nodeのfetch制限とOS/network sandboxを区別する。
 
@@ -155,7 +197,7 @@ Host adapterの操作はstatus/start/attach/stopと限定recording。Node execut
 
 Macはsupervisor→worker、UUID、volume脱落、Named Tunnel、有限backoff、log rotationを維持する。Desktop ownerとlaunchd ownerは排他。Launcherを閉じてもlaunchd所有serviceは終了させない。Node/C2Cの配布、署名/同梱、source通知、clean installは別の配布受入で確認する。
 
-## 8. Implementer selection / Manual Loop / Automation
+## 8. Implementer selection / Manual Loop / Automation — former Runtime target
 
 ### 8.1 Implementer selection contract
 
@@ -277,7 +319,7 @@ Reviewerとimplementerのcontextは別。Findingは実行するshell文字列で
 - connection/auth failure: 当該Review/RunをBlockedにし、別Repositoryや別Taskまで全停止させない。
 - privilege: main変更、公開、Credential変更、権限昇格を復旧手段にしない。
 
-## 9. Launcher integration contract
+## 9. Launcher integration contract — Deferred Runtime
 
 Launcher統合はmanual Loop acceptance後。最初からUIを作らない。
 
@@ -302,7 +344,7 @@ model selectorは既存runtime catalog adapterを使い、固定model enumをLau
 
 既存i18nを使用し、他localeを削除しない。selector / connector名 / MCP名 / endpoint / CLI option / protocol fieldは翻訳しない。巨大な`App.tsx`単独改変を避け、状態adapter/表示component/testへ分割する。
 
-## 10. Verification / progression
+## 10. Verification / progression — Deferred Runtime acceptance
 
 Required VerificationはREQUIREMENTSのV-*へ対応付ける。まずsource fixtureを再利用し、F01〜F09の不足を追加する。read-only試験はMCPの全toolを呼び、Workspaceの内容/属性差分とFS/process副作用を観測する。privateログ/認証stateへの許容された書込とWorkspace writeを混同しない。
 
