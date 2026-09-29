@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "status": "blocked",
+  "identity": {
+    "repository": "",
+    "branch": "",
+    "taskId": "",
+    "runId": "",
+    "iteration": null,
+    "baseCommit": "",
+    "candidateCommit": "",
+    "candidateTree": ""
+  },
+  "reviewer": {
+    "context": "unknown",
+    "githubSource": "not_fetched",
+    "permissionsObserved": "unknown",
+    "writeAccessUsed": false,
+    "shellAccessUsed": false,
+    "adminAccessUsed": false
+  },
+  "acceptanceResults": [],
+  "findings": [],
+  "missingEvidence": [],
+  "summary": "Template only. Fill from an independent GitHub review; do not infer an accepted result."
+}
