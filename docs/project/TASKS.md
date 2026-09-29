@@ -1354,7 +1354,8 @@
         "docs/evidence/work-units/WU-CGW-C2C-SKILL-003.md",
         "docs/project/TASKS.md",
         "docs/project/NEXT_WORK.md",
-        "docs/project/AI_WORK_STATE.md"
+        "docs/project/AI_WORK_STATE.md",
+        "docs/evidence/reviews/C2C-SKILL-002-RESULT.json"
       ],
       "acceptance": [
         {

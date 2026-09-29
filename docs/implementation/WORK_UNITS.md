@@ -19,7 +19,8 @@ TASKS/NEXT_WORK/AI_WORK_STATEの3文書更新は別checkpoint WUにする。製�
 | WU-CGW-C2C-SKILL-001C | CGW-C2C-SKILL-001 | WU-001A/B verification Evidence plus TASKS / NEXT_WORK / AI_WORK_STATE checkpoint (4 files). Candidate/tested tree must name the design+packet commit, not this later Evidence commit |
 | WU-CGW-C2C-SKILL-002A | CGW-C2C-SKILL-002 | `.agents/skills/c2c/{SKILL.md,references/workflow.md,references/review.md,references/evidence.md,assets/review-request.md,assets/review-result.json}` (6 files). Instruction-only; no runtime/script |
 | WU-CGW-C2C-SKILL-002B | CGW-C2C-SKILL-002 | Static validation and safe fixture scenarios recorded to `docs/evidence/work-units/WU-CGW-C2C-SKILL-002.md`; save separate Reviewer packet and checkpoint (5 files). No live Reviewer or Native Skill acceptance is inferred |
-| WU-CGW-C2C-SKILL-003A | CGW-C2C-SKILL-003 | Native Skill discovery/call, GitHub remote-reference retrieval, and separate Reviewer permission/independent-fetch checks in distinct Evidence fields; unavailable paths remain `not_run` / `awaiting_review` |
+| WU-CGW-C2C-SKILL-003A | CGW-C2C-SKILL-003 | `WORK_UNITS.md`, `docs/evidence/work-units/WU-CGW-C2C-SKILL-003.md`, TASKS / NEXT_WORK / AI_WORK_STATE (5 files). Record Native load/call, GitHub retrieval, and reviewer availability independently; unavailable Native is `not_run`, missing reviewer is `awaiting_review` |
+| WU-CGW-C2C-SKILL-003B | CGW-C2C-SKILL-003 | Actual separate Reviewer JSON result, WU-003 Evidence update, and TASKS / NEXT_WORK / AI_WORK_STATE (5 files). Verify same Candidate and permission boundary; Findings continue to a bounded fix/new Candidate; no response keeps `awaiting_review` |
 
 WU-CGW-C2C-SKILL-002A review state stays `awaiting_review` until a different context has independently read the GitHub candidate. Same-context review cannot close that gate.
 

@@ -7,11 +7,11 @@
   "schema_version": 2,
   "branch": "work",
   "main_commit": "293341084ac7a1ddd2de12fede3706023f5b6474",
-  "observed_work_head_before_this_checkpoint": "faeb96747e1b238a2d1125e37177e70ca70ef3ff",
+  "observed_work_head_before_this_checkpoint": "9ac913fecc1ce65d870b0f3dde94a04d6d0cf109",
   "checkpoint_id": "CGW-C2C-SKILL-003",
   "pending_changes": [
-    "docs/evidence/work-units/WU-CGW-C2C-SKILL-002.md",
-    "docs/evidence/reviews/C2C-SKILL-002-CANDIDATE.md",
+    "docs/implementation/WORK_UNITS.md",
+    "docs/evidence/work-units/WU-CGW-C2C-SKILL-003.md",
     "docs/project/TASKS.md",
     "docs/project/NEXT_WORK.md",
     "docs/project/AI_WORK_STATE.md"
@@ -28,7 +28,7 @@
     "CGW-C2C-001": "Ready (Deferred Runtime; 001A/B artifacts preserved)",
     "CGW-C2C-SKILL-001": "Done",
     "CGW-C2C-SKILL-002": "Done (static + tabletop fixtures; review packet saved)",
-    "CGW-C2C-SKILL-003": "Ready (Native not_run; Reviewer awaiting_review)",
+    "CGW-C2C-SKILL-003": "Ready (Native not_run; independent Review awaiting_review)",
     "CGW-JP-001": "Ready",
     "CGW-ENV-001": "Deferred (Runtime)"
   },
@@ -42,7 +42,7 @@
     "No separate Reviewer context has been invoked. Same-context self-review cannot be marked independent. Save a Review Packet and use awaiting_review until a separate ChatGPT Web/Astra session independently fetches the named Candidate from GitHub with read-only access.",
     "Execution fields: Repository/Branch/Task/Run/Iteration/Attempt/Base/Candidate commit and tree/Tested tree/command/cwd/exitCode/start/finish/model/effort/output/source. Never guess unobserved metadata or retarget past runs. Verification=passed|failed|not_run|blocked; Review=accepted|findings|blocked|error.",
     "Finite retries/iterations/deadlines; cancel prevents next phase. Reviewer failure resumes review, never duplicates implementation. Finding fix binds to a new candidate and fresh Verification. Secret, token, cookie, key, and restricted log data never enter skill, evidence, packet, or GitHub.",
-    "WU-CGW-C2C-SKILL-002A Candidate faeb96747e1b238a2d1125e37177e70ca70ef3ff/tree ad0ab1e7ee1a82c8fa7c10f04e49439833120434: six files committed/readback, static and eight tabletop cases passed on that tree. skill-creator quick_validate is blocked because PyYAML is missing in system and bundled Python; manual format checks passed. GitHub remote retrieval of all six files passed. Native discovery/call is not_run. Independent read-only Review packet is docs/evidence/reviews/C2C-SKILL-002-CANDIDATE.md and state is awaiting_review; no Reviewer result exists. Existing WU-001B failures unchanged."
+    "WU-CGW-C2C-SKILL-003A records Native invocation not_run with repository-scoped setup steps; GitHub fetch of all 6 Candidate files passed; a separate remote-reference consumer session is not_run; the actual Reviewer result is awaiting_review. Evidence: docs/evidence/work-units/WU-CGW-C2C-SKILL-003.md; packet: docs/evidence/reviews/C2C-SKILL-002-CANDIDATE.md. Next WU 003B runs only after user supplies an authorized external Reviewer result; otherwise preserve this checkpoint without duplicate implementation."
   ]
 }
 ```
