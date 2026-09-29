@@ -1283,7 +1283,7 @@
     {
       "id": "CGW-C2C-SKILL-002",
       "purpose": "単一のinstruction-only C2C Skillと必要なreferences/assetsを作成し、静的・安全fixture検証を行う",
-      "status": "Ready",
+      "status": "Done",
       "priority": "P0",
       "dependencies": [
         "CGW-C2C-SKILL-001"
@@ -1296,7 +1296,8 @@
         ".agents/skills/c2c/references/evidence.md",
         ".agents/skills/c2c/assets/review-request.md",
         ".agents/skills/c2c/assets/review-result.json",
-        "docs/evidence/work-units/WU-CGW-C2C-SKILL-002.md"
+        "docs/evidence/work-units/WU-CGW-C2C-SKILL-002.md",
+        "docs/evidence/reviews/C2C-SKILL-002-CANDIDATE.md"
       ],
       "acceptance": [
         {
@@ -1343,7 +1344,7 @@
     {
       "id": "CGW-C2C-SKILL-003",
       "purpose": "Native Skill読込、GitHub remote-reference利用、独立Reviewer境界と手動Loop受入を環境別に確認する",
-      "status": "Backlog",
+      "status": "Ready",
       "priority": "P0",
       "dependencies": [
         "CGW-C2C-SKILL-002"
@@ -1395,7 +1396,8 @@
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
-      ]
+      ],
+      "phase_note": "V-SKILL-STATIC-001 passed on candidate faeb96747e1b238a2d1125e37177e70ca70ef3ff/tree ad0ab1e7ee1a82c8fa7c10f04e49439833120434. Native load is not_run; separate Reviewer is awaiting_review; full operation is not accepted."
     }
   ]
 }
