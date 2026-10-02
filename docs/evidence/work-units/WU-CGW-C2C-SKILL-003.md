@@ -62,3 +62,15 @@ This is manual file retrieval, not automatic Native Skill detection.
 | Full implement → Review → Finding → fix → re-Review | `not_run` | Tabletop fixtures do not count as operational loop acceptance |
 
 `CGW-C2C-SKILL-003` remains open. A returned Reviewer JSON must be saved in `docs/evidence/reviews/C2C-SKILL-002-RESULT.json`, checked against this Candidate, and followed by a synchronized Task checkpoint. Findings require a new Candidate and fresh Verification/Review.
+
+## 2026-10-02 resume observation
+
+- Repository/branch/task: `Shota-Zaki/codex-chatgpt-web` / `work` / `CGW-C2C-SKILL-003`.
+- Run/iteration/attempt: `WU-CGW-C2C-SKILL-003-20261002` / 1 / 1. Model/effort: `unknown`.
+- Base/checkpoint: `e65d58cfb69f4859a66bfea26967ca2d6d5e3e68`; base tree: `96cf0f15a220ad6cbbf6c35964455b6856e89e83`.
+- Review Candidate remains `faeb96747e1b238a2d1125e37177e70ca70ef3ff`, tree `ad0ab1e7ee1a82c8fa7c10f04e49439833120434`. No new implementation Candidate was created.
+- Native discovery/load observation: `passed` for discovery and manual loading only. The active runtime supplied `c2c` in its available-skills catalog with repository path `.agents/skills/c2c/SKILL.md`; the implementer read the Skill and its workflow/evidence/review references and followed resume routing. Source: runtime catalog and tool output in this Codex chat; durable output URL unavailable. Explicit `$c2c` invocation and full operational acceptance remain `not_run`. This observation does not replace the earlier attempt or prove Candidate-tree operational verification.
+- Remote recovery commands: `git fetch origin`, `git show origin/work:docs/project/NEXT_WORK.md`, `git rev-parse HEAD HEAD^{tree}`, `git diff faeb96747e1b238a2d1125e37177e70ca70ef3ff HEAD -- .agents/skills/c2c`, and `rg --files docs/evidence/reviews`. Cwd: `/Volumes/ZAKKO_DEV/repos/codex-chatgpt-web`. Observed exit codes: 0. Start/end: `unknown`; observation timestamp from `date -u '+%Y-%m-%dT%H:%M:%SZ'`: `2026-10-02T11:30:13Z`. Output source: exec tool results in this chat. The Skill diff was empty and only the existing Candidate packet was present in the review directory.
+- Independent Review remains `awaiting_review`: no returned result was supplied. No external Reviewer was contacted. The saved packet requires a separate ChatGPT Web/Astra session and an established read-only boundary; an alternative Codex/subagent Reviewer requires explicit user choice.
+- Limits: skill defaults, 3 implementation/fix iterations, 2 retries per phase, 120 minutes per phase, 30 minutes per command. No implementation retry was needed.
+- Full operational loop and remote-reference consumer remain `not_run`. Next work remains 003B, waiting for an eligible external ReviewResult. Prior failures remain unchanged.

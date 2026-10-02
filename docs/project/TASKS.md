@@ -1398,7 +1398,7 @@
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
       ],
-      "phase_note": "V-SKILL-STATIC-001 passed on candidate faeb96747e1b238a2d1125e37177e70ca70ef3ff/tree ad0ab1e7ee1a82c8fa7c10f04e49439833120434. Native load is not_run; separate Reviewer is awaiting_review; full operation is not accepted."
+      "phase_note": "V-SKILL-STATIC-001 passed on candidate faeb96747e1b238a2d1125e37177e70ca70ef3ff/tree ad0ab1e7ee1a82c8fa7c10f04e49439833120434. 2026-10-02 runtime catalog confirms native discovery and manual load; explicit invocation and Candidate-bound operational verification remain not_run. Separate Reviewer is awaiting_review; full operation is not accepted."
     }
   ]
 }

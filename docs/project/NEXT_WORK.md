@@ -38,6 +38,6 @@
     ],
     "implementation_packet": "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
   },
-  "reason": "WU-CGW-C2C-SKILL-003A recorded native not_run, passed remote file retrieval, and saved an independent Review packet. Actual Reviewer response is now the only external handoff; do not self-review."
+  "reason": "2026-10-02 recovery confirmed native catalog discovery/manual load and unchanged Skill files since the Candidate. Explicit invocation and full operational verification remain not_run. No actual independent Reviewer result exists; preserve 003B awaiting_review and do not duplicate implementation or self-review."
 }
 ```

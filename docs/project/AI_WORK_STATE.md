@@ -33,6 +33,7 @@
     "CGW-ENV-001": "Deferred (Runtime)"
   },
   "resume_notes": [
+    "2026-10-02: resumed from remote work e65d58cfb69f4859a66bfea26967ca2d6d5e3e68, switched local checkout to work. Runtime catalog exposed c2c and its manifest/references were read. Discovery/manual load observed, explicit invocation and operational verification not_run. No returned ReviewResult exists; 003B remains awaiting_review. Evidence appended to WU-CGW-C2C-SKILL-003.md; no new implementation Candidate.",
     "2026-09-30: source of truth is GitHub Shota-Zaki/codex-chatgpt-web/work. Live remote read returned work 07805ee4c10d26d59714eaa7875b4d72dc9bf135 and main 293341084ac7a1ddd2de12fede3706023f5b6474; re-read before every write. The original workspace checkout remains on main and is untouched.",
     "WU-CGW-C2C-001A/B already ran. Do not recreate package/index/tests. Preserve packages/c2c-review, LICENSE, UPSTREAM.json and both evidence files as deferred Runtime history.",
     "001B candidate 3da307be6ecb87638d8fada4b712f77822732447/tree 614a16ee1ddc2a0751ca76dbab6f0eafd369f01e had four root bun test failures (two named tests and two timeout tests as listed in its Evidence); bun run verify failed at bun audit for fast-uri@3.1.6 (high) and ip-address@10.3.1 (moderate). No comparison baseline rerun was recorded. Keep these failures failed; do not infer pre-existing causes.",
