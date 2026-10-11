@@ -9,11 +9,7 @@
   "main_commit": "293341084ac7a1ddd2de12fede3706023f5b6474",
   "observed_work_head_before_this_checkpoint": "354a354ecd840b15c2f7efcdfb03c5e66b31ed18",
   "checkpoint_id": "CGW-JP-001",
-  "pending_changes": [
-    "docs/project/TASKS.md",
-    "docs/project/NEXT_WORK.md",
-    "docs/project/AI_WORK_STATE.md"
-  ],
+  "pending_changes": [],
   "source": {
     "repository": "Shota-Zaki/codex-with-chatgpt",
     "fixed_work_commit": "89af4fa34952fe58e017b095ae2f793420cf05b0",

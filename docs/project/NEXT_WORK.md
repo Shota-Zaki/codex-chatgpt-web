@@ -1,6 +1,6 @@
 # Next Work
 
-このJSON blockだけを次WUの正本とする。2026-09-30にremote work HEADと既存Evidenceを再照合した。001A/Bは既に実施済みなので再実装せず、Skill-first設計切替WUから進める。
+このJSON blockだけを次WUの正本とする。2026-10-11にGitHub workの日本語first CandidateとEvidenceを再照合した。実装・検証済みで、独立Review結果の返却待ち。
 
 ```json
 {
