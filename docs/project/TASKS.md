@@ -1028,15 +1028,16 @@
       "complexity": "low",
       "recommended_capability": "mechanical-edit",
       "implementation_packet": {
-        "state": "planned",
-        "path": null,
-        "note": "Task開始前に5〜10ファイル程度のWork Unitへ分割して作成する"
+        "state": "ready",
+        "path": "docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md",
+        "note": "Candidate c40569513db245136c21724a01ff4ed3f928b22a をGitHubから独立Reviewする"
       },
       "references": [
         "docs/design/REQUIREMENTS.md",
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
-      ]
+      ],
+      "phase_note": "Candidate c40569513db245136c21724a/tree 05012315913d828ac78a4c60b7186852f46e4116 is on work. Renderer tests, typecheck, and production build passed on that tree; independent diff review is awaiting_review. Keep CGW-JP-001 Ready until an eligible Candidate-bound ReviewResult is returned and accepted."
     },
     {
       "id": "CGW-JP-002",

@@ -7,11 +7,9 @@
   "schema_version": 2,
   "branch": "work",
   "main_commit": "293341084ac7a1ddd2de12fede3706023f5b6474",
-  "observed_work_head_before_this_checkpoint": "9ac913fecc1ce65d870b0f3dde94a04d6d0cf109",
-  "checkpoint_id": "CGW-C2C-SKILL-003",
+  "observed_work_head_before_this_checkpoint": "354a354ecd840b15c2f7efcdfb03c5e66b31ed18",
+  "checkpoint_id": "CGW-JP-001",
   "pending_changes": [
-    "docs/implementation/WORK_UNITS.md",
-    "docs/evidence/work-units/WU-CGW-C2C-SKILL-003.md",
     "docs/project/TASKS.md",
     "docs/project/NEXT_WORK.md",
     "docs/project/AI_WORK_STATE.md"
@@ -29,10 +27,11 @@
     "CGW-C2C-SKILL-001": "Done",
     "CGW-C2C-SKILL-002": "Done (static + tabletop fixtures; review packet saved)",
     "CGW-C2C-SKILL-003": "Ready (Native not_run; independent Review awaiting_review)",
-    "CGW-JP-001": "Ready",
+    "CGW-JP-001": "Ready (Candidate c40569513db245136c21724a01ff4ed3f928b22a verified; independent Review awaiting_review)",
     "CGW-ENV-001": "Deferred (Runtime)"
   },
   "resume_notes": [
+    "2026-10-11: CGW-JP-001 implementation Candidate c40569513db245136c21724a01ff4ed3f928b22a/tree 05012315913d828ac78a4c60b7186852f46e4116 is on GitHub work. Evidence docs/evidence/work-units/WU-CGW-JP-001.md records 346 Launcher tests passed, one skipped, TypeScript no-emit passed, Vite production build passed; the bun wrapper is unavailable. Candidate-bound Review packet: docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md. No independent ReviewResult has been supplied. WU-CGW-JP-001B awaits a real result and must not self-review or mark the Task Done without it.",
     "2026-10-02: resumed from remote work e65d58cfb69f4859a66bfea26967ca2d6d5e3e68, switched local checkout to work. Runtime catalog exposed c2c and its manifest/references were read. Discovery/manual load observed, explicit invocation and operational verification not_run. No returned ReviewResult exists; 003B remains awaiting_review. Evidence appended to WU-CGW-C2C-SKILL-003.md; no new implementation Candidate.",
     "2026-09-30: source of truth is GitHub Shota-Zaki/codex-chatgpt-web/work. Live remote read returned work 07805ee4c10d26d59714eaa7875b4d72dc9bf135 and main 293341084ac7a1ddd2de12fede3706023f5b6474; re-read before every write. The original workspace checkout remains on main and is untouched.",
     "WU-CGW-C2C-001A/B already ran. Do not recreate package/index/tests. Preserve packages/c2c-review, LICENSE, UPSTREAM.json and both evidence files as deferred Runtime history.",
