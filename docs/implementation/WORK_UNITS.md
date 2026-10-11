@@ -113,7 +113,11 @@ PKGはC2C runtime移植後に独立着手できるが、auto loopや新UIを先�
 
 ## Independent Japanese WUs
 
-WU-CGW-JP-001はApp.tsxの2つのnull fallback、renderer-wiring test、Evidence。checkpointは別WU。stateのlanguage:null、言語選択stage、他locale、machine IDは保持する。
+| WU | Parent Task | Exact scope / exit |
+| --- | --- | --- |
+| WU-CGW-JP-001 | CGW-JP-001 | `launcher/src/App.tsx` の2つのnull fallback、`launcher/tests/renderer-wiring.test.cjs`、Evidence。checkpointは別WU。stateの`language:null`、言語選択stage、他locale、machine IDは保持する |
+
+WU-CGW-JP-001 checkpointは `docs/project/TASKS.md` / `NEXT_WORK.md` / `AI_WORK_STATE.md` のみを別WUにする。stateの`language:null`、言語選択stage、他locale、machine IDは保持する。
 
 CGW-JP-002は表示面ごとにexact pathsを決め、分類→既存i18n→回帰を5〜10ファイル以内で反復する。C2C移植と混ぜない。
 

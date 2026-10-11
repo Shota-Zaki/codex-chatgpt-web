@@ -43,7 +43,7 @@ export function App() {
   const [operation, setOperation] = useState<OperationState | null>(null);
   const [logs, setLogs] = useState<LogRecord[]>([]);
   const [error, setError] = useState<string | null>(null);
-  const documentLanguage = snapshot?.state.language ?? "en";
+  const documentLanguage = snapshot?.state.language ?? "ja";
 
   useEffect(() => {
     document.documentElement.lang = documentLanguage;
@@ -105,7 +105,7 @@ export function App() {
   if (!api) return <FatalMessage message="Launcher IPC is unavailable." />;
   if (!snapshot) return <LaunchLoading />;
 
-  const language = snapshot.state.language ?? "en";
+  const language = snapshot.state.language ?? "ja";
   const copy = copyFor(language);
 
   return (

@@ -17,6 +17,14 @@ test("embedded ChatGPT is measured only after its animated surface mounts", () =
   assert.match(appSource, /ref=\{browserSlotRef\}/);
 });
 
+test("an unset language defaults to Japanese while preserving language selection onboarding", () => {
+  assert.match(appSource, /const documentLanguage = snapshot\?\.state\.language \?\? "ja";/);
+  assert.match(appSource, /const language = snapshot\.state\.language \?\? "ja";/);
+  assert.match(appSource, /snapshot\.state\.language \? "interaction" : "language"/);
+  assert.match(appSource, /const \[selectedLanguage, setSelectedLanguage\] = useState<Language>\(language\)/);
+  assert.match(appSource, /await api!?\.setLanguage\(selectedLanguage\)/);
+});
+
 test("native clicks reach browser tabs instead of the window drag region", () => {
   assert.match(appSource, /draggable=\{surface !== "browser"\}/);
   assert.match(appSource, /className=\{`app-titlebar\$\{draggable \? " draggable" : ""\}`\}/);
