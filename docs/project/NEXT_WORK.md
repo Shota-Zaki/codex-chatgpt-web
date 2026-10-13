@@ -6,38 +6,53 @@
 {
   "schema_version": 2,
   "work_unit": {
-    "task_id": "CGW-JP-001",
-    "work_unit_id": "WU-CGW-JP-001B",
-    "goal": "resume only when an actual separate Reviewer result for the saved Japanese-first Candidate is returned; independently verify identity/permissions and record it, or preserve awaiting_review",
+    "task_id": "CGW-SEC-001",
+    "work_unit_id": "WU-CGW-SEC-001A",
+    "goal": "Apply the bounded compatible root dependency security correction after current baseline and source-backed investigation; preserve failed Windows symlink checks and independent Review gates",
     "implementer": "Codex",
-    "complexity": "low",
-    "recommended_capability": "mechanical-edit",
+    "complexity": "medium",
+    "recommended_capability": "deep-debug",
     "selected_model": "runtime_user_choice",
     "selected_effort": "runtime_user_choice",
     "scope": [
-      "docs/evidence/reviews/WU-CGW-JP-001-RESULT.json",
-      "docs/evidence/work-units/WU-CGW-JP-001.md",
-      "docs/project/TASKS.md",
-      "docs/project/NEXT_WORK.md",
-      "docs/project/AI_WORK_STATE.md"
+      "package.json",
+      "bun.lock",
+      "tests/dependency-security.test.ts",
+      "docs/evidence/work-units/WU-CGW-SEC-001A.md",
+      "docs/evidence/reviews/WU-CGW-SEC-001A-CANDIDATE.md"
     ],
     "preconditions": [
-      "A different ChatGPT Web/Astra context completed docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md and returned a JSON result via an authorized user workflow",
-      "fetch current GitHub work and verify Candidate c40569513db245136c21724a01ff4ed3f928b22a/tree 05012315913d828ac78a4c60b7186852f46e4116 is still the named target",
-      "validate Reviewer context was independent and effective read-only access was established; same-context or unverified-permission results cannot be accepted"
+      "Re-fetch latest GitHub work and touched blobs before editing",
+      "Parent and read-only internal investigator reconcile package reachability and patched versions",
+      "No concurrent root implementation writer; no credential/authentication changes"
     ],
     "steps": [
-      "if no result is supplied, make no duplicate code change and keep Review awaiting_review",
-      "validate exact Repository/Branch/Task/Run/Iteration/Base/Candidate/tree identity against GitHub",
-      "persist returned JSON without secrets, update Evidence and the Task checkpoint",
-      "if accepted, evaluate Done against all Required Verification; if findings, create a bounded fix WU/new Candidate and bind fresh verification/review"
+      "Pin minimal compatible patched root packages for confirmed audit ranges; preserve all unrelated overrides and Launcher lock",
+      "Run focused URI/address security controls and existing MCP/strict-output tests, audit/typecheck/build/full root tests",
+      "Create Candidate, push work, read back exact changed files and tree",
+      "Save eligible Review packet; keep awaiting_review until a separate effective read-only Reviewer returns matching JSON",
+      "Synchronize checkpoint and proceed to independent Launcher advisory investigation"
     ],
-    "exit_condition": "a real ReviewResult and boundary evidence match the Candidate; accepted permits Done only if all Required Verification passes, findings start a new iteration, absent result stays awaiting_review",
+    "exit_condition": "Candidate security correction has fresh evidence; missing independent Review or blocked Windows checks remain incomplete",
     "verification_ids": [
-      "V-JP-001"
+      "V-SEC-001"
     ],
-    "implementation_packet": "docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md"
+    "implementation_packet": "docs/implementation/WU-CGW-QUAL-001_PACKET.md"
   },
-  "reason": "WU-CGW-JP-001 implementation and Launcher verification are complete on Candidate c40569513db245136c21724a01ff4ed3f928b22a. Independent diff review is the only remaining Required gate; do not self-review, duplicate implementation, or mark Done without an eligible ReviewResult."
+  "reason": "Japanese WU-CGW-JP-001B and Skill 003B remain awaiting eligible external ReviewResult. Phase 3–4 root dependency remediation is independently executable under the goal objective. Do not repeat Japanese or Skill implementation.",
+  "awaiting_review": [
+    {
+      "task_id": "CGW-JP-001",
+      "work_unit_id": "WU-CGW-JP-001B",
+      "candidate": "c40569513db245136c21724a01ff4ed3f928b22a",
+      "packet": "docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md"
+    },
+    {
+      "task_id": "CGW-C2C-SKILL-003",
+      "work_unit_id": "WU-CGW-C2C-SKILL-003B",
+      "candidate": "faeb96747e1b238a2d1125e37177e70ca70ef3ff",
+      "packet": "docs/evidence/reviews/C2C-SKILL-002-CANDIDATE.md"
+    }
+  ]
 }
 ```

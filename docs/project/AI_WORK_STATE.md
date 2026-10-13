@@ -6,9 +6,9 @@
 {
   "schema_version": 2,
   "branch": "work",
-  "main_commit": "293341084ac7a1ddd2de12fede3706023f5b6474",
-  "observed_work_head_before_this_checkpoint": "354a354ecd840b15c2f7efcdfb03c5e66b31ed18",
-  "checkpoint_id": "CGW-JP-001",
+  "main_commit": "e65d58cfb69f4859a66bfea26967ca2d6d5e3e68",
+  "observed_work_head_before_this_checkpoint": "54e27bb44df59f74b0e432a5e9c3c72ae40da3bc",
+  "checkpoint_id": "WU-CGW-QUAL-001A-20261014",
   "pending_changes": [],
   "source": {
     "repository": "Shota-Zaki/codex-with-chatgpt",
@@ -22,11 +22,14 @@
     "CGW-C2C-001": "Ready (Deferred Runtime; 001A/B artifacts preserved)",
     "CGW-C2C-SKILL-001": "Done",
     "CGW-C2C-SKILL-002": "Done (static + tabletop fixtures; review packet saved)",
-    "CGW-C2C-SKILL-003": "Ready (Native not_run; independent Review awaiting_review)",
+    "CGW-C2C-SKILL-003": "Ready (Windows native discovery/manual load observed; explicit invocation not_run; Review awaiting_review)",
     "CGW-JP-001": "Ready (Candidate c40569513db245136c21724a01ff4ed3f928b22a verified; independent Review awaiting_review)",
-    "CGW-ENV-001": "Deferred (Runtime)"
+    "CGW-ENV-001": "Deferred (Runtime)",
+    "CGW-QUAL-001": "Ready (Windows baseline recorded; symlink privileges blocked; GUI/live not_run)",
+    "CGW-SEC-001": "Ready (root 10 and Launcher 28 audit advisories; bounded remediation next)"
   },
   "resume_notes": [
+    "2026-10-14 JST: work bc48ac5 and main e65d58c fetched through GitHub. Windows Bun 1.4.0 frozen root/Launcher installs passed, locks unchanged. Initial temporary-Bun root test failure preserved; workspace Bun retry gives 779 pass/2 symlink EPERM fail/3 skip. Launcher after install gives 342 pass/1 symlink EPERM fail/4 skip. Both typechecks/builds pass; verify fails root audit (10 advisories), separate Launcher audit reports 28. No GUI/live acceptance, no independent ReviewResult. Baseline evidence 54e27bb; Skill observations 4bf0312. Native catalog/manual load and remote-reference resume observed, explicit $c2c not_run. NEXT_WORK points to independent WU-CGW-SEC-001A; no Runtime revival or JP-002 dependency bypass. Raw logs stay in temporary local storage; no secrets published.",
     "2026-10-11: CGW-JP-001 implementation Candidate c40569513db245136c21724a01ff4ed3f928b22a/tree 05012315913d828ac78a4c60b7186852f46e4116 is on GitHub work. Evidence docs/evidence/work-units/WU-CGW-JP-001.md records 346 Launcher tests passed, one skipped, TypeScript no-emit passed, Vite production build passed; the bun wrapper is unavailable. Candidate-bound Review packet: docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md. No independent ReviewResult has been supplied. WU-CGW-JP-001B awaits a real result and must not self-review or mark the Task Done without it.",
     "2026-10-02: resumed from remote work e65d58cfb69f4859a66bfea26967ca2d6d5e3e68, switched local checkout to work. Runtime catalog exposed c2c and its manifest/references were read. Discovery/manual load observed, explicit invocation and operational verification not_run. No returned ReviewResult exists; 003B remains awaiting_review. Evidence appended to WU-CGW-C2C-SKILL-003.md; no new implementation Candidate.",
     "2026-09-30: source of truth is GitHub Shota-Zaki/codex-chatgpt-web/work. Live remote read returned work 07805ee4c10d26d59714eaa7875b4d72dc9bf135 and main 293341084ac7a1ddd2de12fede3706023f5b6474; re-read before every write. The original workspace checkout remains on main and is untouched.",

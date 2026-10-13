@@ -1399,7 +1399,97 @@
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WU-CGW-C2C-SKILL_PACKET.md"
       ],
-      "phase_note": "V-SKILL-STATIC-001 passed on candidate faeb96747e1b238a2d1125e37177e70ca70ef3ff/tree ad0ab1e7ee1a82c8fa7c10f04e49439833120434. 2026-10-02 runtime catalog confirms native discovery and manual load; explicit invocation and Candidate-bound operational verification remain not_run. Separate Reviewer is awaiting_review; full operation is not accepted."
+      "phase_note": "Native discovery/manual load observed in Windows runtime; explicit $c2c call not_run. GitHub remote-reference manual resume passed, independent permission boundary blocked; Review awaiting_review; operational loop not_run. Skill Candidate faeb967 unchanged."
+    },
+    {
+      "id": "CGW-QUAL-001",
+      "purpose": "Windows優先の現在baseline、実行環境制約、主要modeの回帰/起動受入を証跡で区別する",
+      "status": "Ready",
+      "priority": "P0",
+      "dependencies": [],
+      "phase": "Skill-first quality",
+      "scope": [
+        "docs/evidence/work-units/WU-CGW-QUAL-001.md",
+        "docs/evidence/executions/**"
+      ],
+      "acceptance": [
+        {
+          "id": "AC-QUAL-001",
+          "condition": "Windows root/Launcherのtest/typecheck/build/verifyと実機GUI/live受入を別々に記録し、未実施や権限制約をPASSにしない"
+        }
+      ],
+      "verification": [
+        {
+          "id": "V-QUAL-001",
+          "required": true,
+          "method": "baseline command records、有限の不具合修正WU、Candidate-bound Verificationと独立Review。実機/liveは別ゲート",
+          "targets": [
+            "docs/evidence/work-units/WU-CGW-QUAL-001.md",
+            "docs/evidence/executions/**"
+          ]
+        }
+      ],
+      "risk": "Windows権限制約またはadvisoryだけを製品受入成功と誤認しない",
+      "complexity": "medium",
+      "recommended_capability": "deep-debug",
+      "implementation_packet": {
+        "state": "ready",
+        "path": "docs/implementation/WU-CGW-QUAL-001_PACKET.md"
+      },
+      "references": [
+        "docs/evidence/work-units/WU-CGW-QUAL-001.md"
+      ],
+      "phase_note": "Baseline bc48ac5/tree 5419edd: root 779 pass/2 fail/3 skip; Launcher 342 pass/1 fail/4 skip. Failures are file-symlink EPERM; GUI/live not_run. Independent acceptance incomplete."
+    },
+    {
+      "id": "CGW-SEC-001",
+      "purpose": "現在auditのadvisoryを到達性と互換性に基づいて限定修正し、root/Launcherを別々に再検証する",
+      "status": "Ready",
+      "priority": "P0",
+      "dependencies": [],
+      "phase": "Skill-first quality",
+      "scope": [
+        "package.json",
+        "bun.lock",
+        "launcher/package.json",
+        "launcher/bun.lock",
+        "tests/**",
+        "launcher/tests/**",
+        "docs/evidence/**"
+      ],
+      "acceptance": [
+        {
+          "id": "AC-SEC-001",
+          "condition": "auditで報告された依存を利用経路に基づいて調査し、必要な最小互換修正・回帰・独立Reviewを揃える。audit弱体化や認証/TLS無効化は禁止"
+        }
+      ],
+      "verification": [
+        {
+          "id": "V-SEC-001",
+          "required": true,
+          "method": "root/Launcher audit、typecheck/test/build、focused security/互換性check、新Candidate GitHub readback、独立Review",
+          "targets": [
+            "package.json",
+            "bun.lock",
+            "launcher/package.json",
+            "launcher/bun.lock",
+            "tests/**",
+            "launcher/tests/**",
+            "docs/evidence/**"
+          ]
+        }
+      ],
+      "risk": "Windows権限制約またはadvisoryだけを製品受入成功と誤認しない",
+      "complexity": "medium",
+      "recommended_capability": "deep-debug",
+      "implementation_packet": {
+        "state": "ready",
+        "path": "docs/implementation/WU-CGW-QUAL-001_PACKET.md"
+      },
+      "references": [
+        "docs/evidence/work-units/WU-CGW-QUAL-001.md"
+      ],
+      "phase_note": "Root audit 10 advisories; Launcher 28. Investigate and remediate in distinct bounded WUs; no accepted Review or security fixed claim."
     }
   ]
 }
