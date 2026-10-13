@@ -1,0 +1,180 @@
+{
+  "limits": {
+    "source": "skill defaults",
+    "iterations": 3,
+    "commandTimeoutMinutes": 30,
+    "phaseDeadlineMinutes": 120,
+    "phaseRetries": 2
+  },
+  "baseCommit": "bc48ac53fbc7f50544b971a8013ab29dd7263bb7",
+  "runId": "WU-CGW-QUAL-001-20261014",
+  "source": "Windows exec tool output and locally captured command metadata",
+  "attempt": 1,
+  "repository": "Shota-Zaki/codex-chatgpt-web",
+  "candidateCommit": null,
+  "model": "unknown",
+  "baseTree": "5419edd2772fae132adc2ccf62c3aa6f7221d9bf",
+  "branch": "work",
+  "schemaVersion": 1,
+  "iteration": 1,
+  "outputPolicy": "raw logs retained temporarily on implementer computer only; no raw logs published; safe summaries in WU evidence",
+  "testedCommit": "bc48ac53fbc7f50544b971a8013ab29dd7263bb7",
+  "commands": [
+    {
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "finishedAt": "2026-10-13T22:41:45.0871837Z",
+      "startedAt": "2026-10-13T22:41:23.1756137Z",
+      "exitCode": 0,
+      "command": "bun install --frozen-lockfile",
+      "attemptId": "root-install",
+      "status": "passed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\root-install.log"
+    },
+    {
+      "command": "bun install --frozen-lockfile",
+      "finishedAt": "2026-10-13T22:42:19.1238568Z",
+      "cwd": "C:\\project\\codex-chatgpt-web\\launcher",
+      "exitCode": 0,
+      "startedAt": "2026-10-13T22:41:39.4888252Z",
+      "attemptId": "launcher-install",
+      "status": "passed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\launcher-install.log"
+    },
+    {
+      "cwd": "C:\\project\\codex-chatgpt-web\\launcher",
+      "finishedAt": "2026-10-13T22:41:02.2445266Z",
+      "output": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\launcher-tests.log",
+      "exitCode": 1,
+      "command": "node --test 'tests/*.test.cjs'",
+      "startedAt": "2026-10-13T22:40:57.8244531Z",
+      "attemptId": "launcher-tests",
+      "status": "failed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\launcher-tests.log"
+    },
+    {
+      "exitCode": 0,
+      "command": "bun run typecheck",
+      "finishedAt": "2026-10-13T22:42:19.3462797Z",
+      "startedAt": "2026-10-13T22:42:10.8458909Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "root-typecheck",
+      "status": "passed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\root-typecheck.log"
+    },
+    {
+      "exitCode": 1,
+      "command": "bun test ./tests",
+      "finishedAt": "2026-10-13T22:44:56.8712957Z",
+      "startedAt": "2026-10-13T22:42:19.3667644Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "root-tests",
+      "status": "failed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\root-tests.log"
+    },
+    {
+      "exitCode": 0,
+      "command": "bun run build",
+      "finishedAt": "2026-10-13T22:45:03.5666713Z",
+      "startedAt": "2026-10-13T22:44:56.8807802Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "root-build",
+      "status": "passed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\root-build.log"
+    },
+    {
+      "exitCode": 1,
+      "command": "bun run verify",
+      "finishedAt": "2026-10-13T22:45:03.853735Z",
+      "startedAt": "2026-10-13T22:45:03.569508Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "verify",
+      "status": "failed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\verify.log"
+    },
+    {
+      "command": "bun run launcher:typecheck",
+      "exitCode": 0,
+      "startedAt": "2026-10-13T22:42:27.8622117Z",
+      "finishedAt": "2026-10-13T22:42:29.5895818Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "launcher-typecheck",
+      "status": "passed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\launcher-typecheck.log"
+    },
+    {
+      "command": "bun run launcher:test",
+      "exitCode": 1,
+      "startedAt": "2026-10-13T22:42:29.6066102Z",
+      "finishedAt": "2026-10-13T22:42:34.1702474Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "launcher-tests-retry",
+      "status": "failed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\launcher-tests-retry.log"
+    },
+    {
+      "command": "bun run launcher:build",
+      "exitCode": 0,
+      "startedAt": "2026-10-13T22:42:34.1792877Z",
+      "finishedAt": "2026-10-13T22:42:37.2982059Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "launcher-build",
+      "status": "passed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\launcher-build.log"
+    },
+    {
+      "exitCode": 0,
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "command": "bun run build",
+      "startedAt": "2026-10-13T22:44:02.4056574Z",
+      "finishedAt": "2026-10-13T22:44:25.0361849Z",
+      "attemptId": "root-build-durable",
+      "status": "passed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\root-build-durable.log"
+    },
+    {
+      "exitCode": 1,
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "command": "bun run verify",
+      "startedAt": "2026-10-13T22:44:25.0627283Z",
+      "finishedAt": "2026-10-13T22:44:25.4088737Z",
+      "attemptId": "verify-durable",
+      "status": "failed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\verify-durable.log"
+    },
+    {
+      "exitCode": 0,
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "command": "bun test ./tests/browser-login.test.ts ./tests/chatgpt-web-models.test.ts",
+      "startedAt": "2026-10-13T22:44:25.4193473Z",
+      "finishedAt": "2026-10-13T22:44:25.6988703Z",
+      "attemptId": "root-routing-retry",
+      "status": "passed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\root-routing-retry.log"
+    },
+    {
+      "finishedAt": "2026-10-13T22:44:51.9818318Z",
+      "exitCode": 1,
+      "command": "bun run launcher:audit",
+      "startedAt": "2026-10-13T22:44:51.6538376Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "launcher-audit",
+      "status": "failed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\launcher-audit.log"
+    },
+    {
+      "startedAt": "2026-10-13T22:45:11.8242882Z",
+      "command": "bun test ./tests",
+      "exitCode": 1,
+      "finishedAt": "2026-10-13T22:47:49.7961831Z",
+      "cwd": "C:\\project\\codex-chatgpt-web",
+      "attemptId": "root-tests-retry",
+      "status": "failed",
+      "outputReference": "C:\\Users\\shota\\AppData\\Local\\Temp\\cgw-20261014-verification\\root-tests-retry.log"
+    }
+  ],
+  "taskId": "CGW-QUAL-001",
+  "testedTree": "5419edd2772fae132adc2ccf62c3aa6f7221d9bf",
+  "independent": false,
+  "candidateTree": null,
+  "effort": "unknown"
+}
