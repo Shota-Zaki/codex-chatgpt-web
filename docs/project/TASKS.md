@@ -1487,9 +1487,11 @@
         "path": "docs/implementation/WU-CGW-QUAL-001_PACKET.md"
       },
       "references": [
-        "docs/evidence/work-units/WU-CGW-QUAL-001.md"
+        "docs/evidence/work-units/WU-CGW-QUAL-001.md",
+        "docs/evidence/work-units/WU-CGW-SEC-001A.md",
+        "docs/evidence/reviews/WU-CGW-SEC-001A-CANDIDATE.md"
       ],
-      "phase_note": "Root audit 10 advisories; Launcher 28. Investigate and remediate in distinct bounded WUs; no accepted Review or security fixed claim."
+      "phase_note": "Root WU-CGW-SEC-001A implemented at f2a311c795ea4644dcc57b18995547b5e81426cf/tree cc3779b24cc7b0c73f8fa3a7d65dde1cea7b15a8; evidence 0fe56e9. Audit zero; typecheck/build and 17 focused tests passed; full root 782 pass/2 file-symlink EPERM fail/3 skip. Combined focused selection terminated and remains unresolved. verify fails Launcher audit (28 advisories). Independent root Review awaiting_review; no Done/security-fixed claim. Next independent WU-SEC-001B investigates Launcher compatible patches."
     }
   ]
 }

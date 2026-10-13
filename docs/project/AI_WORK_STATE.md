@@ -7,8 +7,8 @@
   "schema_version": 2,
   "branch": "work",
   "main_commit": "e65d58cfb69f4859a66bfea26967ca2d6d5e3e68",
-  "observed_work_head_before_this_checkpoint": "54e27bb44df59f74b0e432a5e9c3c72ae40da3bc",
-  "checkpoint_id": "WU-CGW-QUAL-001A-20261014",
+  "observed_work_head_before_this_checkpoint": "0fe56e98208cc534321b8542808b83931cf18c97",
+  "checkpoint_id": "WU-CGW-SEC-001A-20261014",
   "pending_changes": [],
   "source": {
     "repository": "Shota-Zaki/codex-with-chatgpt",
@@ -26,9 +26,10 @@
     "CGW-JP-001": "Ready (Candidate c40569513db245136c21724a01ff4ed3f928b22a verified; independent Review awaiting_review)",
     "CGW-ENV-001": "Deferred (Runtime)",
     "CGW-QUAL-001": "Ready (Windows baseline recorded; symlink privileges blocked; GUI/live not_run)",
-    "CGW-SEC-001": "Ready (root 10 and Launcher 28 audit advisories; bounded remediation next)"
+    "CGW-SEC-001": "Ready (root Candidate f2a311c implemented/audit zero; required Windows/verify gates incomplete; Review awaiting_review; Launcher WU-001B next)"
   },
   "resume_notes": [
+    "2026-10-14 JST: root dependency Candidate f2a311c795ea4644dcc57b18995547b5e81426cf/tree cc3779b24cc7b0c73f8fa3a7d65dde1cea7b15a8 pushed/readback. Only root package.json, bun.lock and 3 security regressions changed. SDK 1.31.0 / fast-uri 3.1.8 / hono 4.13.7 / ip-address 10.7.1 / proxy-addr 2.0.8. Root audit zero; typecheck/build/17 focused tests pass; full root 782 pass/2 symlink EPERM fail/3 existing skips. An earlier combined focused selection hung, stopped only owned PID 47472 after identity check, exit -1 retained; no success inferred. verify now fails Launcher audit (28 advisories). Evidence/Review packet 0fe56e9; Candidate not retargeted to evidence commits. Two internal source-only agents found no concrete bypass/regression but are not independent C2C Review. Awaiting_review for JP c405695, Skill faeb967 and root f2a311c. NEXT_WORK SEC-001B Launcher advisory investigation; do not duplicate root implementation. Goal remains incomplete, Deferred Runtime unchanged.",
     "2026-10-14 JST: work bc48ac5 and main e65d58c fetched through GitHub. Windows Bun 1.4.0 frozen root/Launcher installs passed, locks unchanged. Initial temporary-Bun root test failure preserved; workspace Bun retry gives 779 pass/2 symlink EPERM fail/3 skip. Launcher after install gives 342 pass/1 symlink EPERM fail/4 skip. Both typechecks/builds pass; verify fails root audit (10 advisories), separate Launcher audit reports 28. No GUI/live acceptance, no independent ReviewResult. Baseline evidence 54e27bb; Skill observations 4bf0312. Native catalog/manual load and remote-reference resume observed, explicit $c2c not_run. NEXT_WORK points to independent WU-CGW-SEC-001A; no Runtime revival or JP-002 dependency bypass. Raw logs stay in temporary local storage; no secrets published.",
     "2026-10-11: CGW-JP-001 implementation Candidate c40569513db245136c21724a01ff4ed3f928b22a/tree 05012315913d828ac78a4c60b7186852f46e4116 is on GitHub work. Evidence docs/evidence/work-units/WU-CGW-JP-001.md records 346 Launcher tests passed, one skipped, TypeScript no-emit passed, Vite production build passed; the bun wrapper is unavailable. Candidate-bound Review packet: docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md. No independent ReviewResult has been supplied. WU-CGW-JP-001B awaits a real result and must not self-review or mark the Task Done without it.",
     "2026-10-02: resumed from remote work e65d58cfb69f4859a66bfea26967ca2d6d5e3e68, switched local checkout to work. Runtime catalog exposed c2c and its manifest/references were read. Discovery/manual load observed, explicit invocation and operational verification not_run. No returned ReviewResult exists; 003B remains awaiting_review. Evidence appended to WU-CGW-C2C-SKILL-003.md; no new implementation Candidate.",
