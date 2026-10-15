@@ -1,38 +1,34 @@
 # Next Work
 
-このJSON blockだけを次WUの正本とする。2026-10-15 JSTにLauncher依存修正、brokerテスト終了修正、隔離Windows source起動・再起動のEvidenceをGitHubへ反映・readbackした。独立Reviewと未達受入は維持し、ローカルdirectory package検証へ進む。
+このJSON blockだけを次WUの正本とする。保存済み4言語のWindows表示確認はEvidenceと画像をGitHubでreadback済み。次の優先事項は独立Review結果の取得であり、実装済みWUを繰り返さない。
 
 ```json
 {
   "schema_version": 2,
   "work_unit": {
-    "task_id": "CGW-QUAL-001",
-    "work_unit_id": "WU-CGW-QUAL-001D",
-    "goal": "Complete saved ja/zh-CN/zh-TW/ko visual controls using isolated profiles of the verified local directory artifact; keep independent Review and live acceptance incomplete",
+    "task_id": "CGW-JP-001",
+    "work_unit_id": "WU-CGW-JP-001B",
+    "status": "awaiting_review",
+    "goal": "Obtain and validate a separate-context effectively read-only GitHub ReviewResult for Candidate c40569513db245136c21724a01ff4ed3f928b22a; do not duplicate implementation",
     "implementer": "Codex",
     "selected_model": "runtime_user_choice",
     "selected_effort": "runtime_user_choice",
     "scope": [
-      "docs/evidence/work-units/WU-CGW-QUAL-001D.md"
+      "docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md"
     ],
     "preconditions": [
-      "Re-fetch current work and read WU-001D packet",
-      "Re-use verified directory artifact only; no source/package/lock or actual user state changes",
-      "Computer Use observes only uniquely returned owned Launcher window"
+      "Re-fetch work and look for a real independent ReviewResult",
+      "Verify separate Reviewer context and effective read-only permission boundary; do not substitute this implementer or write-enabled agents"
     ],
     "steps": [
-      "Seed one isolated saved-locale profile per case and launch bounded owned child",
-      "Observe localized interaction screen and saved locale persistence; no login/setup/privacy control actions",
-      "Record snapshots as inline implementation observations, exact command/process bounds and unknown timestamps honestly",
-      "Stop only verified owned processes, save evidence, commit/readback and synchronize checkpoint"
+      "Reviewer independently fetches Repository/Branch/Base/Candidate/source/Evidence from GitHub",
+      "Validate result identity and required Verification; findings require a new bounded fix Candidate and fresh review",
+      "If unavailable preserve awaiting_review; re-evaluate truly ready independent WUs without bypassing dependencies"
     ],
-    "exit_condition": "Each saved-locale control has observed passed/failed/blocked status; no broad locale/JP/Task Done without required verification and independent Review",
-    "verification_ids": [
-      "V-QUAL-001"
-    ],
-    "implementation_packet": "docs/implementation/WU-CGW-QUAL-001D_PACKET.md"
+    "exit_condition": "Accepted matching independent Review plus all required Verification, or preserved awaiting_review with concrete external blocker",
+    "implementation_packet": "docs/evidence/reviews/WU-CGW-JP-001-CANDIDATE.md"
   },
-  "reason": "WU-001C packaging and limited Japanese/English visual observations are recorded/readback; no repeat implementation. Remaining saved-locale controls are safe independent quality work; external Review, unpatched advisories and live/privileged acceptance remain incomplete.",
+  "reason": "WU-001D verification evidence and four original JPEGs committed/readback at2996d4d. Dependency audit finds no further independent bounded implementation WU currently eligible. JP-002 depends on accepted JP-001; Runtime remains Deferred. Five review packets have no Result; current tools do not establish eligible separate read-only Reviewer.",
   "awaiting_review": [
     {
       "task_id": "CGW-JP-001",
@@ -67,7 +63,7 @@
   ],
   "open_verification_conditions": [
     "Windows file-symlink privilege prevents root two/Launcher one test checks; no elevation or new skips",
-    "Unsigned local Windows directory packaged startup, null-language Japanese and saved English/restart observed at5e20a32; remaining locale matrix, signed installer/distribution and live mode/auth/browser/MCP/Tunnel acceptance remain incomplete",
+    "Unsigned local directory startup, null-language ja/saved en restart and saved ja/zh-CN/zh-TW/ko interaction-stage controls observed; signed installer/distribution and live mode/auth/browser/MCP/Tunnel acceptance remain incomplete",
     "Explicit $c2c invocation, independent read-only Reviewer and operational Finding/Fix/re-Review loop not_run or awaiting_review",
     "Launcher residual http-cache-semantics GHSA-ch52-4w7c-c8xp and sprintf-js GHSA-hp3w-g68c-fv3c have no published patched release; audit/verify remain failed",
     "Broker test termination correction Candidate671a9c2 passed matched diagnostics but awaits independent Review and parent required acceptance"

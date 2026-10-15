@@ -1413,7 +1413,8 @@
         "docs/evidence/executions/**",
         "docs/evidence/reviews/WU-CGW-QUAL-001*-CANDIDATE.md",
         "docs/implementation/WU-CGW-QUAL-001*_PACKET.md",
-        "tests/chatgpt-web-harness.test.ts"
+        "tests/chatgpt-web-harness.test.ts",
+        "docs/evidence/visual/WU-CGW-QUAL-001D/**"
       ],
       "acceptance": [
         {
@@ -1446,9 +1447,10 @@
         "docs/evidence/reviews/WU-CGW-QUAL-001B-CANDIDATE.md",
         "docs/implementation/WU-CGW-QUAL-001C_PACKET.md",
         "docs/evidence/work-units/WU-CGW-QUAL-001C.md",
-        "docs/implementation/WU-CGW-QUAL-001D_PACKET.md"
+        "docs/implementation/WU-CGW-QUAL-001D_PACKET.md",
+        "docs/evidence/work-units/WU-CGW-QUAL-001D.md"
       ],
-      "phase_note": "Test-only Candidate671a9c2 remains awaiting_review. WU-001C verification at commit5e20a32/treeb48e1b6f completed: runtime generation, unsigned Windows x64 directory build, 6025-file embedded/installed runtime validation and isolated packaged startup pass; source/locks unchanged. Japanese null-language first selection and saved English/restart visual controls observed through Computer Use; inline screenshots, no independent acceptance. Evidence1df5b7a. Residual audit2, Windows root2/Launcher1 symlink failures, signing/installer/live mode/auth and independent Reviews remain incomplete. Next WU-001D saved ja/zh-CN/zh-TW/ko visual controls."
+      "phase_note": "WU-001D isolated saved ja/zh-CN/zh-TW/ko interaction-stage visual controls passed and unchanged synthetic state observed; four bounded JPEGs and execution metadata committed/readback at2996d4d. No source Candidate change. WU-001C unsigned directory/runtime/startup and null-ja/saved-en checks remain valid at5e20a32. Test Candidate671a9c2 and all five review packets await eligible independent read-only Review. Root2/Launcher1 symlink EPERM, two no-patch Launcher advisories, signed installer/distribution and live mode/auth/browser/MCP/Tunnel gates remain incomplete. No further independently ready bounded implementation WU under current prerequisites; next priority JP-001B external ReviewResult. No Task Done or Deferred Runtime revival."
     },
     {
       "id": "CGW-SEC-001",
