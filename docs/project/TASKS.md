@@ -1037,7 +1037,7 @@
         "docs/design/DETAILED_DESIGN.md",
         "docs/implementation/WORK_UNITS.md"
       ],
-      "phase_note": "Candidate c40569513db245136c21724a/tree 05012315913d828ac78a4c60b7186852f46e4116 is on work. Renderer tests, typecheck, and production build passed on that tree; independent diff review is awaiting_review. Keep CGW-JP-001 Ready until an eligible Candidate-bound ReviewResult is returned and accepted."
+      "phase_note": "Candidate c40569513db245136c21724a/tree 05012315913d828ac78a4c60b7186852f46e4116 is on work. Renderer tests, typecheck, and production build passed on that tree; independent diff review is awaiting_review. Keep CGW-JP-001 Ready until an eligible Candidate-bound ReviewResult is returned and accepted. Current Windows package at5e20a32 separately shows Japanese null-language selection and saved English precedence/restart; this different tested tree does not replace original Candidate Verification or independent Review."
     },
     {
       "id": "CGW-JP-002",
@@ -1409,8 +1409,10 @@
       "dependencies": [],
       "phase": "Skill-first quality",
       "scope": [
-        "docs/evidence/work-units/WU-CGW-QUAL-001.md",
+        "docs/evidence/work-units/WU-CGW-QUAL-001*.md",
         "docs/evidence/executions/**",
+        "docs/evidence/reviews/WU-CGW-QUAL-001*-CANDIDATE.md",
+        "docs/implementation/WU-CGW-QUAL-001*_PACKET.md",
         "tests/chatgpt-web-harness.test.ts"
       ],
       "acceptance": [
@@ -1435,16 +1437,18 @@
       "recommended_capability": "deep-debug",
       "implementation_packet": {
         "state": "ready",
-        "path": "docs/implementation/WU-CGW-QUAL-001C_PACKET.md"
+        "path": "docs/implementation/WU-CGW-QUAL-001D_PACKET.md"
       },
       "references": [
         "docs/evidence/work-units/WU-CGW-QUAL-001.md",
         "docs/implementation/WU-CGW-QUAL-001B_PACKET.md",
         "docs/evidence/work-units/WU-CGW-QUAL-001B.md",
         "docs/evidence/reviews/WU-CGW-QUAL-001B-CANDIDATE.md",
-        "docs/implementation/WU-CGW-QUAL-001C_PACKET.md"
+        "docs/implementation/WU-CGW-QUAL-001C_PACKET.md",
+        "docs/evidence/work-units/WU-CGW-QUAL-001C.md",
+        "docs/implementation/WU-CGW-QUAL-001D_PACKET.md"
       ],
-      "phase_note": "WU-CGW-QUAL-001B test-only Candidate671a9c25d2a73baf98a2a2a61225747eb5ca8e0f/treec61b94ea6491699c604985401809f6cb945afd20 committed/readback; evidence4a2d9ee. Same two-test selection changes timeout30s→pass0.35s; combined180s timeout→103pass37.41s, Error/message assertions retained. Typecheck pass; fullroot782pass/2symlinkEPERMfail/3skip. Unpackaged isolated Windows Electron startup/restart/renderer/CLI and selected synthetic-state persistence pass; packaged/live/visual locale acceptance remain incomplete. Independent Review awaiting_review; next WU-001C local directory package verification."
+      "phase_note": "Test-only Candidate671a9c2 remains awaiting_review. WU-001C verification at commit5e20a32/treeb48e1b6f completed: runtime generation, unsigned Windows x64 directory build, 6025-file embedded/installed runtime validation and isolated packaged startup pass; source/locks unchanged. Japanese null-language first selection and saved English/restart visual controls observed through Computer Use; inline screenshots, no independent acceptance. Evidence1df5b7a. Residual audit2, Windows root2/Launcher1 symlink failures, signing/installer/live mode/auth and independent Reviews remain incomplete. Next WU-001D saved ja/zh-CN/zh-TW/ko visual controls."
     },
     {
       "id": "CGW-SEC-001",

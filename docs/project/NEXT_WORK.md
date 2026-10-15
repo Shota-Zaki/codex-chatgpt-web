@@ -7,33 +7,32 @@
   "schema_version": 2,
   "work_unit": {
     "task_id": "CGW-QUAL-001",
-    "work_unit_id": "WU-CGW-QUAL-001C",
-    "goal": "Verify existing runtime bundle and isolated Windows directory package without publishing, installing or changing credentials/OS state; preserve open Review/security gates",
+    "work_unit_id": "WU-CGW-QUAL-001D",
+    "goal": "Complete saved ja/zh-CN/zh-TW/ko visual controls using isolated profiles of the verified local directory artifact; keep independent Review and live acceptance incomplete",
     "implementer": "Codex",
     "selected_model": "runtime_user_choice",
     "selected_effort": "runtime_user_choice",
     "scope": [
-      "docs/evidence/work-units/WU-CGW-QUAL-001C.md"
+      "docs/evidence/work-units/WU-CGW-QUAL-001D.md"
     ],
     "preconditions": [
-      "Re-fetch GitHub work and current code/evidence anchors",
-      "Read WU-CGW-QUAL-001C_PACKET; product/package/locks unchanged in this verification-only unit",
-      "Inspect current builder help/profile/autostart behavior before commands; no signing/TLS or permission bypass"
+      "Re-fetch current work and read WU-001D packet",
+      "Re-use verified directory artifact only; no source/package/lock or actual user state changes",
+      "Computer Use observes only uniquely returned owned Launcher window"
     ],
     "steps": [
-      "Prepare existing runtime bundle with supported script and capture exact tested tree",
-      "Inspect installed builder options and attempt isolated directory build with publishing disabled",
-      "Validate embedded runtime/assets/licenses and safely isolated packaged smoke if possible",
-      "Save observed failures/blocks and precise limits; never convert untested/live/Review states into passes",
-      "Commit/readback evidence then synchronize checkpoint and select next genuinely executable bounded work"
+      "Seed one isolated saved-locale profile per case and launch bounded owned child",
+      "Observe localized interaction screen and saved locale persistence; no login/setup/privacy control actions",
+      "Record snapshots as inline implementation observations, exact command/process bounds and unknown timestamps honestly",
+      "Stop only verified owned processes, save evidence, commit/readback and synchronize checkpoint"
     ],
-    "exit_condition": "Current local directory build/runtime/packaged startup status has actual evidence or a precise verified blocker; not release/deploy/full product acceptance",
+    "exit_condition": "Each saved-locale control has observed passed/failed/blocked status; no broad locale/JP/Task Done without required verification and independent Review",
     "verification_ids": [
       "V-QUAL-001"
     ],
-    "implementation_packet": "docs/implementation/WU-CGW-QUAL-001C_PACKET.md"
+    "implementation_packet": "docs/implementation/WU-CGW-QUAL-001D_PACKET.md"
   },
-  "reason": "Launcher advisory correction and test-termination correction are implemented; avoid duplicate code/commit. Continue independent local packaging verification. Residual no-patch advisories, symlink privileges and eligible external Reviews remain incomplete.",
+  "reason": "WU-001C packaging and limited Japanese/English visual observations are recorded/readback; no repeat implementation. Remaining saved-locale controls are safe independent quality work; external Review, unpatched advisories and live/privileged acceptance remain incomplete.",
   "awaiting_review": [
     {
       "task_id": "CGW-JP-001",
@@ -68,7 +67,7 @@
   ],
   "open_verification_conditions": [
     "Windows file-symlink privilege prevents root two/Launcher one test checks; no elevation or new skips",
-    "Packaged startup, visual Japanese/onboarding and live mode/auth/browser/MCP/Tunnel acceptance remain incomplete; unpackaged isolated source startup/restart passed",
+    "Unsigned local Windows directory packaged startup, null-language Japanese and saved English/restart observed at5e20a32; remaining locale matrix, signed installer/distribution and live mode/auth/browser/MCP/Tunnel acceptance remain incomplete",
     "Explicit $c2c invocation, independent read-only Reviewer and operational Finding/Fix/re-Review loop not_run or awaiting_review",
     "Launcher residual http-cache-semantics GHSA-ch52-4w7c-c8xp and sprintf-js GHSA-hp3w-g68c-fv3c have no published patched release; audit/verify remain failed",
     "Broker test termination correction Candidate671a9c2 passed matched diagnostics but awaits independent Review and parent required acceptance"
