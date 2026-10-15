@@ -39,6 +39,8 @@ Outcome: blocked for complete security/required Verification acceptance. The cor
 
 Possible follow-up: a verified upstream fix/release; a separately investigated maintained dependency migration that removes the old downloader path; or a bounded local patch after a reproducible reachable defect and compatibility contract are established. Forcing Electron get 3 to 5, inventing a patched version, suppressing audit, or changing authentication/TLS would not be a justified shortcut. No such change was made.
 
+Follow-up registry observation on 2026-10-15: public npm latest metadata reports electron-builder 26.15.3, app-builder-lib 26.15.3 (still declares Electron get ^3.0.0), and Electron get 5.1.0. The installed builder is already the current maintained release; no compatible newer parent release removing the older dependency path was available in that observation. Source: exec/Invoke-RestMethod GET of the three public registry latest endpoints; per-request start/end unknown. No registry credentials or package writes were used. This strengthens the recorded upstream blocker; it does not close either advisory.
+
 ## Complete baseline audit inventory (28 reported entries)
 
 The inventory preserves affected-version entries, including repeated GHSA IDs across separate major ranges; it is not 28 distinct CVEs.
