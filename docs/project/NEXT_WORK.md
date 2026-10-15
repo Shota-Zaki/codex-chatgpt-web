@@ -6,42 +6,36 @@
 {
   "schema_version": 2,
   "work_unit": {
-    "task_id": "CGW-SEC-001",
-    "work_unit_id": "WU-CGW-SEC-001B",
-    "goal": "Investigate current Launcher dependency advisories and prepare/apply only compatible minimal security corrections; preserve direct Electron/Vite contracts and independent root Review wait",
+    "task_id": "CGW-QUAL-001",
+    "work_unit_id": "WU-CGW-QUAL-001B",
+    "goal": "Confirm and correct broker revocation test termination while preserving Error type and revoked/stale-binding message assertions; no speculative production changes",
     "implementer": "Codex",
-    "complexity": "medium",
-    "recommended_capability": "deep-debug",
     "selected_model": "runtime_user_choice",
     "selected_effort": "runtime_user_choice",
     "scope": [
-      "launcher/package.json",
-      "launcher/bun.lock",
-      "launcher/tests/dependency-security.test.cjs",
-      "docs/evidence/work-units/WU-CGW-SEC-001B.md",
-      "docs/evidence/reviews/WU-CGW-SEC-001B-CANDIDATE.md"
+      "tests/chatgpt-web-harness.test.ts",
+      "docs/evidence/work-units/WU-CGW-QUAL-001B.md",
+      "docs/evidence/reviews/WU-CGW-QUAL-001B-CANDIDATE.md"
     ],
     "preconditions": [
-      "Re-fetch GitHub work HEAD and touched blobs",
-      "Read WU-CGW-QUAL-001_PACKET and SEC-001A evidence; do not repeat root dependency implementation",
-      "Trace electron/get/electron-builder/Vite transitive callers and version compatibility before editing, including multiple undici and brace-expansion major lines",
-      "Fresh internal read-only investigator per fix-finding; do not treat it as independent C2C Review"
+      "Re-fetch latest GitHub work and packet",
+      "Complete current baseline diagnostic process before source edits",
+      "Compare same scope before/after; no skips/timeouts inflated or production broker change without proven defect"
     ],
     "steps": [
-      "Inspect current frozen Launcher resolutions and official advisories; separate runtime/build-tool reachability",
-      "Prepare bounded exact-version strategy preserving major/API compatibility; do not force one major override across incompatible transitive callers",
-      "Apply supported correction only; keep root package/lock unchanged",
-      "Run frozen install, Launcher audit/typecheck/test/build and relevant security/legitimate controls; preserve symlink EPERM and new failures",
-      "Commit Candidate to work, read back files/tree and save eligible independent Review packet",
-      "Synchronize Task/Next/State; investigate combined root focused-selection hang as a separate quality WU"
+      "Record 30s two-test and 180s original-selection baseline outcomes",
+      "Compare ordinary Promise settlement with pending rejection matcher, preserving exact rejection contracts",
+      "If confirmed, run typecheck and matched diagnostics/full root regression at new tree",
+      "Commit/readback Candidate, save verification and independent Review request",
+      "Keep all residual advisories/Windows/Review gates incomplete and synchronize checkpoint"
     ],
-    "exit_condition": "Compatible Launcher candidate and fresh evidence/readback exist or an explicit technical blocker is saved; no Done without required verification and eligible Review",
+    "exit_condition": "Confirmed bounded correction has Candidate and evidence, or precise next hypothesis/blocker saved; independent Review and full quality acceptance remain separate",
     "verification_ids": [
-      "V-SEC-001"
+      "V-QUAL-001"
     ],
-    "implementation_packet": "docs/implementation/WU-CGW-QUAL-001_PACKET.md"
+    "implementation_packet": "docs/implementation/WU-CGW-QUAL-001B_PACKET.md"
   },
-  "reason": "Root dependency Candidate is committed and awaiting independent Review; Launcher 28 advisories remain independently executable. Japanese/Skill Review wait does not authorize JP-002 or Deferred Runtime.",
+  "reason": "Launcher WU-001B implemented/readback with complete 28-entry disposition and two no-patch advisories. Continue independent root termination investigation; do not repeat dependency implementation or bypass existing Review/JP dependencies.",
   "awaiting_review": [
     {
       "task_id": "CGW-JP-001",
@@ -60,13 +54,20 @@
       "work_unit_id": "WU-CGW-SEC-001A",
       "candidate": "f2a311c795ea4644dcc57b18995547b5e81426cf",
       "packet": "docs/evidence/reviews/WU-CGW-SEC-001A-CANDIDATE.md"
+    },
+    {
+      "task_id": "CGW-SEC-001",
+      "work_unit_id": "WU-CGW-SEC-001B",
+      "candidate": "570e21a33bbe4061e28bcb923f2e87184581a38d",
+      "packet": "docs/evidence/reviews/WU-CGW-SEC-001B-CANDIDATE.md"
     }
   ],
   "open_verification_conditions": [
     "Windows file-symlink privilege prevents root two/Launcher one test checks; no elevation or new skips",
     "Combined root focused-test selection hung and was terminated; full suite passed harness but this order concern remains unresolved",
     "GUI/Electron startup, live modes/authentication/browser/MCP/Tunnel/restart acceptance not_run",
-    "Explicit $c2c invocation, independent read-only Reviewer and operational Finding/Fix/re-Review loop not_run or awaiting_review"
+    "Explicit $c2c invocation, independent read-only Reviewer and operational Finding/Fix/re-Review loop not_run or awaiting_review",
+    "Launcher residual http-cache-semantics GHSA-ch52-4w7c-c8xp and sprintf-js GHSA-hp3w-g68c-fv3c have no published patched release; audit/verify remain failed"
   ]
 }
 ```

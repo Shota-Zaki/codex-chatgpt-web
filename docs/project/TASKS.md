@@ -1410,7 +1410,8 @@
       "phase": "Skill-first quality",
       "scope": [
         "docs/evidence/work-units/WU-CGW-QUAL-001.md",
-        "docs/evidence/executions/**"
+        "docs/evidence/executions/**",
+        "tests/chatgpt-web-harness.test.ts"
       ],
       "acceptance": [
         {
@@ -1434,12 +1435,13 @@
       "recommended_capability": "deep-debug",
       "implementation_packet": {
         "state": "ready",
-        "path": "docs/implementation/WU-CGW-QUAL-001_PACKET.md"
+        "path": "docs/implementation/WU-CGW-QUAL-001B_PACKET.md"
       },
       "references": [
-        "docs/evidence/work-units/WU-CGW-QUAL-001.md"
+        "docs/evidence/work-units/WU-CGW-QUAL-001.md",
+        "docs/implementation/WU-CGW-QUAL-001B_PACKET.md"
       ],
-      "phase_note": "Baseline bc48ac5/tree 5419edd: root 779 pass/2 fail/3 skip; Launcher 342 pass/1 fail/4 skip. Failures are file-symlink EPERM; GUI/live not_run. Independent acceptance incomplete."
+      "phase_note": "Windows baseline retained. Fresh two-test broker revoke selection exceeds 30s deadline; ordinary-await synthetic broker control completes immediately. Bounded QUAL-001B compares async test error validation without weakening assertions; production cause unproven. GUI/live and symlink acceptance incomplete."
     },
     {
       "id": "CGW-SEC-001",
@@ -1489,9 +1491,11 @@
       "references": [
         "docs/evidence/work-units/WU-CGW-QUAL-001.md",
         "docs/evidence/work-units/WU-CGW-SEC-001A.md",
-        "docs/evidence/reviews/WU-CGW-SEC-001A-CANDIDATE.md"
+        "docs/evidence/reviews/WU-CGW-SEC-001A-CANDIDATE.md",
+        "docs/evidence/work-units/WU-CGW-SEC-001B.md",
+        "docs/evidence/reviews/WU-CGW-SEC-001B-CANDIDATE.md"
       ],
-      "phase_note": "Root WU-CGW-SEC-001A implemented at f2a311c795ea4644dcc57b18995547b5e81426cf/tree cc3779b24cc7b0c73f8fa3a7d65dde1cea7b15a8; evidence 0fe56e9. Audit zero; typecheck/build and 17 focused tests passed; full root 782 pass/2 file-symlink EPERM fail/3 skip. Combined focused selection terminated and remains unresolved. verify fails Launcher audit (28 advisories). Independent root Review awaiting_review; no Done/security-fixed claim. Next independent WU-SEC-001B investigates Launcher compatible patches."
+      "phase_note": "Root Candidate f2a311c remains audit-zero and awaiting_review. Launcher WU-001B Candidate 570e21a33bbe4061e28bcb923f2e87184581a38d/tree 5bb367f4c3769d42b7040b9e59fe4c5bc83f5c10 is committed/readback; evidence 9d9e018. Launcher audit 28→2 (http-cache-semantics / sprintf-js have no published fixes); 4 focused tests/typecheck/build/frozen install pass; full Launcher 346 pass/1 symlink EPERM fail/4 skip; verify fails residual Launcher audit. Review awaiting_review; no Done or complete security-fix claim."
     }
   ]
 }
