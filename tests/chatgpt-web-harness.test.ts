@@ -2178,21 +2178,29 @@ describe("ChatGPT outer-native harness v4", () => {
   test("revoking a turn rejects pending invocations and invalidates its binding", async () => {
     const socketPath = brokerTestEndpoint(`cgw-h3-revoke-${process.pid}-${Date.now()}`);
     const broker = TurnBroker.forSocket(socketPath);
-    const token = await broker.register(extractChatGptTurnEnvironment(parsed(environmentXml)), 10_000);
-    const claimed = await callTurnBroker<{ bindingId: string }>(socketPath, { method: "claim", token });
-    const invocation = callTurnBroker(socketPath, {
-      method: "invoke",
-      bindingId: claimed.bindingId,
-      wireName: "exec_command",
-      freeform: false,
-      arguments: { cmd: "sleep 30" },
-    }, 10_000);
-    await broker.nextToolBatch(token);
-    broker.revoke(token);
-    await expect(invocation).rejects.toThrow("revoked");
-    await expect(callTurnBroker(socketPath, { method: "resolve", bindingId: claimed.bindingId }))
-      .rejects.toThrow("has already finished");
-    await broker.close();
+    try {
+      const token = await broker.register(extractChatGptTurnEnvironment(parsed(environmentXml)), 10_000);
+      const claimed = await callTurnBroker<{ bindingId: string }>(socketPath, { method: "claim", token });
+      const invocation = callTurnBroker(socketPath, {
+        method: "invoke",
+        bindingId: claimed.bindingId,
+        wireName: "exec_command",
+        freeform: false,
+        arguments: { cmd: "sleep 30" },
+      }, 10_000).then(() => undefined, (error: unknown) => error);
+      await broker.nextToolBatch(token);
+      broker.revoke(token);
+      // Settle pipe I/O with ordinary await before invoking synchronous matchers.
+      const invocationError = await invocation;
+      expect(invocationError).toBeInstanceOf(Error);
+      expect((invocationError as Error).message).toContain("revoked");
+      const resolveError = await callTurnBroker(socketPath, { method: "resolve", bindingId: claimed.bindingId })
+        .then(() => undefined, (error: unknown) => error);
+      expect(resolveError).toBeInstanceOf(Error);
+      expect((resolveError as Error).message).toContain("has already finished");
+    } finally {
+      await broker.close();
+    }
   });
 
   test("recalculates usage from tool results added during the active browser turn", async () => {
