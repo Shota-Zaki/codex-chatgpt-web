@@ -1435,13 +1435,16 @@
       "recommended_capability": "deep-debug",
       "implementation_packet": {
         "state": "ready",
-        "path": "docs/implementation/WU-CGW-QUAL-001B_PACKET.md"
+        "path": "docs/implementation/WU-CGW-QUAL-001C_PACKET.md"
       },
       "references": [
         "docs/evidence/work-units/WU-CGW-QUAL-001.md",
-        "docs/implementation/WU-CGW-QUAL-001B_PACKET.md"
+        "docs/implementation/WU-CGW-QUAL-001B_PACKET.md",
+        "docs/evidence/work-units/WU-CGW-QUAL-001B.md",
+        "docs/evidence/reviews/WU-CGW-QUAL-001B-CANDIDATE.md",
+        "docs/implementation/WU-CGW-QUAL-001C_PACKET.md"
       ],
-      "phase_note": "Windows baseline retained. Fresh two-test broker revoke selection exceeds 30s deadline; ordinary-await synthetic broker control completes immediately. Bounded QUAL-001B compares async test error validation without weakening assertions; production cause unproven. GUI/live and symlink acceptance incomplete."
+      "phase_note": "WU-CGW-QUAL-001B test-only Candidate671a9c25d2a73baf98a2a2a61225747eb5ca8e0f/treec61b94ea6491699c604985401809f6cb945afd20 committed/readback; evidence4a2d9ee. Same two-test selection changes timeout30s→pass0.35s; combined180s timeout→103pass37.41s, Error/message assertions retained. Typecheck pass; fullroot782pass/2symlinkEPERMfail/3skip. Unpackaged isolated Windows Electron startup/restart/renderer/CLI and selected synthetic-state persistence pass; packaged/live/visual locale acceptance remain incomplete. Independent Review awaiting_review; next WU-001C local directory package verification."
     },
     {
       "id": "CGW-SEC-001",
@@ -1495,7 +1498,7 @@
         "docs/evidence/work-units/WU-CGW-SEC-001B.md",
         "docs/evidence/reviews/WU-CGW-SEC-001B-CANDIDATE.md"
       ],
-      "phase_note": "Root Candidate f2a311c remains audit-zero and awaiting_review. Launcher WU-001B Candidate 570e21a33bbe4061e28bcb923f2e87184581a38d/tree 5bb367f4c3769d42b7040b9e59fe4c5bc83f5c10 is committed/readback; evidence 9d9e018. Launcher audit 28→2 (http-cache-semantics / sprintf-js have no published fixes); 4 focused tests/typecheck/build/frozen install pass; full Launcher 346 pass/1 symlink EPERM fail/4 skip; verify fails residual Launcher audit. Review awaiting_review; no Done or complete security-fix claim."
+      "phase_note": "Root Candidate f2a311c remains audit-zero and awaiting_review. Launcher WU-001B Candidate 570e21a33bbe4061e28bcb923f2e87184581a38d/tree 5bb367f4c3769d42b7040b9e59fe4c5bc83f5c10 is committed/readback; evidence 9d9e018. Launcher audit 28→2 (http-cache-semantics / sprintf-js have no published fixes); 4 focused tests/typecheck/build/frozen install pass; full Launcher 346 pass/1 symlink EPERM fail/4 skip; verify fails residual Launcher audit. Review awaiting_review; no Done or complete security-fix claim. Current npm latest electron-builder/app-builder-lib26.15.3 still depends on get3; no newer compatible parent release was available to remove residual paths."
     }
   ]
 }
